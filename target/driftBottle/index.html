@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<!--ExtJs Framework Start-->
+<script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="ext/ext-all.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="ext/resources/css/ext-all.css" />
+<style type="text/css">
+</style>
+<!--ExtJs Framework End-->
+<script type="text/javascript">
+        Ext.onReady(function () {
+            //Init Ext:Qtip attribute
+            Ext.QuickTips.init();
+            Ext.form.Field.prototype.msgTarget = 'side';
+            //Submit Btn click function
+            var btnaddclick = function () {
+                if (form.getForm().isValid()) {
+                    Ext.Msg.alert("Alert", "Login Success!");
+                }
+				Ext.Ajax.request({
+					method: 'POST',                             //发送方式.'POST'或'GET',一般是'POST'
+					url: '/jerseywstest/rest/students/add',                  //发送到页面
+					success:function(request){                   //发送成功的回调函数
+						var message = request.responseText;  //取得从JSP文件out.print(...)传来的文本
+						Ext.Msg.alert('信息',message);        //弹出对话框
+						store.reload();                      //重新读入数据
+						//grid.getView().refresh();
+					},
+				failure:function(){                          //发送失败的回调函数
+					Ext.Msg.alert("错误", "与后台联系的时候出现了问题");
+				},
+				params:{name:'Lily', dept:'MSE'}
+				});
+            }
+
+            var btnlistclick = function () {
+				
+				Ext.Ajax.request({
+					headers : {
+						'Content-Type':'application/json',
+						'Accept' : 'application/json'
+					},
+					method: "GET",
+					//url : "http://localhost:8080/jerseywstest/rest/students/list",
+					url : "/jerseywstest/rest/students/list",
+					success : function(response, options) {
+						alert(response.responseText);
+						Ext.Msg.alert("Message", response.responseText);
+						var data = Ext.decode(response.responseText);
+						Ext.Msg.alert("Message", data.msg);
+					},
+					failure : function(response, options) {
+						alert("FAILURE " + response.responseText);
+						var data = Ext.decode(response.responseText);
+						Ext.Msg.alert("Message", data.msg);
+					}
+				});
+            }
+
+            var btnadd = new Ext.Button({
+                text: 'Add',
+                handler: btnaddclick
+            });
+
+            var btnlist = new Ext.Button({
+                text: 'List',
+                handler: btnlistclick
+            });
+
+            var stuname = new Ext.form.TextField({
+                width: 140,
+                allowBlank: false,
+                maxLength: 20,
+                name: 'name',
+                fieldLabel: 'name',
+                blankText: 'Please input name.',
+                maxLengthText: 'Can not pass 20 characters'
+            });
+
+            var studept = new Ext.form.TextField({
+                width: 140,
+                allowBlank: false,
+                maxLength: 20,
+                name: 'dept',
+                fieldLabel: 'dept',
+                blankText: 'Please input dept.',
+                maxLengthText: 'Can not pass 20 characters'
+            });
+
+            //Form
+            var form = new Ext.form.FormPanel({
+                url: '******',
+                labelAlign: 'right',
+                labelWidth: 45,
+                frame: true,
+                cls: 'loginform',
+                buttonAlign: 'center',
+                bodyStyle: 'padding:6px 0px 0px 15px',
+                items: [stuname, studept],
+                buttons: [btnadd, btnlist]
+            });
+            //Window
+            var win = new Ext.Window({
+                title: 'Add child',
+                plain: true,
+                width: 276,
+                height: 141,
+                resizable: false,
+                shadow: true,
+                modal: true,
+                closable: false,
+                animCollapse: true,
+                items: form
+            });
+            win.show();
+
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

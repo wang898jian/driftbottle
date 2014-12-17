@@ -1,0 +1,21 @@
+#MyEclipse Hibernate Properties
+#Wed Dec 17 19:25:14 CST 2014
+genBasicCompId=false
+sessionFactoryName=sse.ustc.driftbottle.data.HibernateSessionFactory
+profile=
+daoSFId=
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/driftBottle_0400/src/main/java/hibernate.cfg.xml
+createConfigFile=true
+baseDaoClass=BaseHibernateDAO
