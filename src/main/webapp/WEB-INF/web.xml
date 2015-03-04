@@ -2,7 +2,7 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+<web-app id="WebApp_1422272714317">
 	<display-name>Archetype Created Web Application</display-name>
 
 	<servlet>
@@ -16,7 +16,7 @@
 
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>sse.ustc.driftbottle</param-value>
+			<param-value>sse.ustc.driftbottle.impl</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
