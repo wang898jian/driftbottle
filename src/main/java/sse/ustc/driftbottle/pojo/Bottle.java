@@ -1,4 +1,4 @@
-package sse.ustc.driftbottle.DAO;
+package sse.ustc.driftbottle.pojo;
 
 import java.util.HashSet;
 import java.util.Set;

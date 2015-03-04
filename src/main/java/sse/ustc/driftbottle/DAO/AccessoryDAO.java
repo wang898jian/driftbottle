@@ -7,6 +7,8 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sse.ustc.driftbottle.pojo.Accessory;
+
 /**
  * A data access object (DAO) providing persistence and search support for
  * Accessory entities. Transaction control of the save(), update() and delete()
@@ -15,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.DAO.Accessory
+ * @see sse.ustc.driftbottle.pojo.Accessory
  * @author MyEclipse Persistence Tools
  */
 public class AccessoryDAO extends BaseHibernateDAO {
@@ -47,7 +49,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Accessory findById(sse.ustc.driftbottle.DAO.AccessoryId id) {
+	public Accessory findById(sse.ustc.driftbottle.pojo.AccessoryId id) {
 		log.debug("getting Accessory instance with id: " + id);
 		try {
 			Accessory instance = (Accessory) getSession().get(

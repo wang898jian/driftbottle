@@ -1,4 +1,4 @@
-package sse.ustc.driftbottle.DAO;
+package sse.ustc.driftbottle.pojo;
 
 /**
  * Loginformation entity. @author MyEclipse Persistence Tools

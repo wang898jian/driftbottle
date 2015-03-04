@@ -7,6 +7,8 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sse.ustc.driftbottle.pojo.Loginformation;
+
 /**
  * A data access object (DAO) providing persistence and search support for
  * Loginformation entities. Transaction control of the save(), update() and
@@ -15,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * transactions. Each of these methods provides additional information for how
  * to configure it for the desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.DAO.Loginformation
+ * @see sse.ustc.driftbottle.pojo.Loginformation
  * @author MyEclipse Persistence Tools
  */
 public class LoginformationDAO extends BaseHibernateDAO {

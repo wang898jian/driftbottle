@@ -12,10 +12,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import sse.ustc.driftbottle.DAO.Friends;
 import sse.ustc.driftbottle.DAO.FriendsDAO;
-import sse.ustc.driftbottle.DAO.Loginformation;
 import sse.ustc.driftbottle.DAO.LoginformationDAO;
+import sse.ustc.driftbottle.pojo.Friends;
+import sse.ustc.driftbottle.pojo.Loginformation;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
