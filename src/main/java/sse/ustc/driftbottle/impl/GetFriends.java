@@ -87,7 +87,7 @@ public class GetFriends {
 				}
 				logInfo.setUserState("online");
 				tmpInfo.setUserinfo(logInfo);
-				logInforDao.save(tmpInfo);
+				logInforDao.merge(tmpInfo);
 				return true;
 			}
 
