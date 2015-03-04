@@ -14,8 +14,10 @@ import javax.ws.rs.core.MediaType;
 
 import sse.ustc.driftbottle.DAO.FriendsDAO;
 import sse.ustc.driftbottle.DAO.LoginformationDAO;
+import sse.ustc.driftbottle.DAO.UserinfoDAO;
 import sse.ustc.driftbottle.pojo.Friends;
 import sse.ustc.driftbottle.pojo.Loginformation;
+import sse.ustc.driftbottle.pojo.Userinfo;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
@@ -69,14 +71,26 @@ public class GetFriends {
 		// File f = new File("c:/project_bottle/DriftBottle.txt");
 		System.out.println(userName);
 		System.out.println(passwd);
-		Loginformation logInfo = new Loginformation();
-		logInfo.setUserName(userName);
-		logInfo.setPassWd(passwd);
+
 		LoginformationDAO logInforDao = new LoginformationDAO();
-		if (logInforDao.findById(userName) == null) {
+		Loginformation tmpInfo = logInforDao.findById(userName);
+		if (tmpInfo == null) {
 			return false;
 		} else {
-			return true;// 应该把状态置为online
+			if (tmpInfo.getPassWd() != passwd) {
+				return false;
+			} else {
+				UserinfoDAO userinfo = new UserinfoDAO();
+				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName);
+				if (logInfo==null) {
+					logInfo = new Userinfo();
+				}
+				logInfo.setUserState("online");
+				tmpInfo.setUserinfo(logInfo);
+				logInforDao.save(tmpInfo);
+				return true;
+			}
+
 		}
 	}
 
@@ -98,16 +112,16 @@ public class GetFriends {
 			return false;
 	}
 
-//	@POST
-//	@Path("/addJson")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	@Consumes({ MediaType.APPLICATION_JSON })
-//	public String addJson(userTest name) {
-//		// File f = new File("c:/project_bottle/DriftBottle.txt");
-//		System.out.println(name.getName());
-//		System.out.println(name.getPassword());
-//		return "asdfasdfasd";
-//	}
+	// @POST
+	// @Path("/addJson")
+	// @Produces(MediaType.TEXT_PLAIN)
+	// @Consumes({ MediaType.APPLICATION_JSON })
+	// public String addJson(userTest name) {
+	// // File f = new File("c:/project_bottle/DriftBottle.txt");
+	// System.out.println(name.getName());
+	// System.out.println(name.getPassword());
+	// return "asdfasdfasd";
+	// }
 
 	@POST
 	@Path("/addJson1")
