@@ -8,8 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.data.Userinfo;
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Userinfo entities. Transaction control of the save(), update() and delete()
@@ -18,7 +16,7 @@ import sse.ustc.driftbottle.data.Userinfo;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.data.Userinfo
+ * @see sse.ustc.driftbottle.DAO.Userinfo
  * @author MyEclipse Persistence Tools
  */
 public class UserinfoDAO extends BaseHibernateDAO {
@@ -29,6 +27,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 	public static final String REAL_NAME = "realName";
 	public static final String USER_ADDRESS = "userAddress";
 	public static final String USER_STATE = "userState";
+
 	public void save(Userinfo transientInstance) {
 		log.debug("saving Userinfo instance");
 		try {
@@ -55,7 +54,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("getting Userinfo instance with id: " + id);
 		try {
 			Userinfo instance = (Userinfo) getSession().get(
-					"sse.ustc.driftbottle.data.Userinfo", id);
+					"sse.ustc.driftbottle.DAO.Userinfo", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -67,7 +66,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("finding Userinfo instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.data.Userinfo")
+					.createCriteria("sse.ustc.driftbottle.DAO.Userinfo")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -104,11 +103,11 @@ public class UserinfoDAO extends BaseHibernateDAO {
 	public List findByUserAddress(Object userAddress) {
 		return findByProperty(USER_ADDRESS, userAddress);
 	}
-	
-	public List findByUserStates(Object userState) {
+
+	public List findByUserState(Object userState) {
 		return findByProperty(USER_STATE, userState);
 	}
-	
+
 	public List findAll() {
 		log.debug("finding all Userinfo instances");
 		try {

@@ -2,6 +2,7 @@ package sse.ustc.driftbottle.impl;
 
 import java.io.File;
 
+import javax.persistence.Entity;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -11,20 +12,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jettison.json.JSONObject;
-import org.jboss.marshalling.TraceInformation.UserInfo;
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
+import sse.ustc.driftbottle.DAO.Friends;
 import sse.ustc.driftbottle.DAO.FriendsDAO;
+import sse.ustc.driftbottle.DAO.Loginformation;
 import sse.ustc.driftbottle.DAO.LoginformationDAO;
-import sse.ustc.driftbottle.data.Friends;
-import sse.ustc.driftbottle.data.Loginformation;
-import sse.ustc.driftbottle.data.Userinfo;
-import sse.ustc.driftbottle.data.userTest;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
+@Entity
 @Path("/myresource")
 public class GetFriends {
 	// TODO: update the class to suit your needs
@@ -68,50 +64,50 @@ public class GetFriends {
 	@POST
 	@Path("/loginUser")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean loginUser(@FormParam("userID") Integer userID,
+	public boolean loginUser(@FormParam("userName") String userName,
 			@FormParam("passwd") String passwd) {
 		// File f = new File("c:/project_bottle/DriftBottle.txt");
-		System.out.println(userID);
+		System.out.println(userName);
 		System.out.println(passwd);
 		Loginformation logInfo = new Loginformation();
-		logInfo.setUserId(userID);
+		logInfo.setUserName(userName);
 		logInfo.setPassWd(passwd);
 		LoginformationDAO logInforDao = new LoginformationDAO();
-		if (logInforDao.findById(userID) == null) {
+		if (logInforDao.findById(userName) == null) {
 			return false;
 		} else {
-			return true;//应该把状态置为online
+			return true;// 应该把状态置为online
 		}
 	}
 
 	@POST
 	@Path("/registUser")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean registUser(@FormParam("name") Integer name,
+	public boolean registUser(@FormParam("username") String userName,
 			@FormParam("passwd") String passwd) {
-		System.out.println(name);
+		System.out.println(userName);
 		System.out.println(passwd);
 		Loginformation logInfo = new Loginformation();
-		logInfo.setUserId(name);
+		logInfo.setUserName(userName);
 		logInfo.setPassWd(passwd);
 		LoginformationDAO logInforDao = new LoginformationDAO();
-		if (logInforDao.findByProperty("name", name) == null) {
+		if (logInforDao.findByProperty("userName", userName) == null) {
 			logInforDao.save(logInfo);
 			return true;
 		} else
 			return false;
 	}
 
-	@POST
-	@Path("/addJson")
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public String addJson(userTest name) {
-		// File f = new File("c:/project_bottle/DriftBottle.txt");
-		System.out.println(name.getName());
-		System.out.println(name.getPassword());
-		return "asdfasdfasd";
-	}
+//	@POST
+//	@Path("/addJson")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	@Consumes({ MediaType.APPLICATION_JSON })
+//	public String addJson(userTest name) {
+//		// File f = new File("c:/project_bottle/DriftBottle.txt");
+//		System.out.println(name.getName());
+//		System.out.println(name.getPassword());
+//		return "asdfasdfasd";
+//	}
 
 	@POST
 	@Path("/addJson1")

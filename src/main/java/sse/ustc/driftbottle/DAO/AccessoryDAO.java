@@ -7,9 +7,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.data.Accessory;
-import sse.ustc.driftbottle.data.AccessoryId;
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Accessory entities. Transaction control of the save(), update() and delete()
@@ -18,7 +15,7 @@ import sse.ustc.driftbottle.data.AccessoryId;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.data.Accessory
+ * @see sse.ustc.driftbottle.DAO.Accessory
  * @author MyEclipse Persistence Tools
  */
 public class AccessoryDAO extends BaseHibernateDAO {
@@ -50,11 +47,11 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Accessory findById(sse.ustc.driftbottle.data.AccessoryId id) {
+	public Accessory findById(sse.ustc.driftbottle.DAO.AccessoryId id) {
 		log.debug("getting Accessory instance with id: " + id);
 		try {
 			Accessory instance = (Accessory) getSession().get(
-					"sse.ustc.driftbottle.data.Accessory", id);
+					"sse.ustc.driftbottle.DAO.Accessory", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -66,7 +63,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("finding Accessory instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.data.Accessory")
+					.createCriteria("sse.ustc.driftbottle.DAO.Accessory")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

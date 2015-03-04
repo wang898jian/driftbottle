@@ -7,8 +7,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.data.Loginformation;
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Loginformation entities. Transaction control of the save(), update() and
@@ -17,7 +15,7 @@ import sse.ustc.driftbottle.data.Loginformation;
  * transactions. Each of these methods provides additional information for how
  * to configure it for the desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.data.Loginformation
+ * @see sse.ustc.driftbottle.DAO.Loginformation
  * @author MyEclipse Persistence Tools
  */
 public class LoginformationDAO extends BaseHibernateDAO {
@@ -48,11 +46,11 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Loginformation findById(java.lang.Integer id) {
+	public Loginformation findById(java.lang.String id) {
 		log.debug("getting Loginformation instance with id: " + id);
 		try {
 			Loginformation instance = (Loginformation) getSession().get(
-					"sse.ustc.driftbottle.data.Loginformation", id);
+					"sse.ustc.driftbottle.DAO.Loginformation", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,7 +62,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		log.debug("finding Loginformation instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.data.Loginformation")
+					.createCriteria("sse.ustc.driftbottle.DAO.Loginformation")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

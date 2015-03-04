@@ -1,7 +1,6 @@
 package sse.ustc.driftbottle.DAO;
 
 import org.hibernate.Session;
-
 import sse.ustc.driftbottle.data.HibernateSessionFactory;
 
 

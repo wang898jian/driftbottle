@@ -8,9 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.data.Bottle;
-import sse.ustc.driftbottle.data.BottleId;
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Bottle entities. Transaction control of the save(), update() and delete()
@@ -19,7 +16,7 @@ import sse.ustc.driftbottle.data.BottleId;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.data.Bottle
+ * @see sse.ustc.driftbottle.DAO.Bottle
  * @author MyEclipse Persistence Tools
  */
 public class BottleDAO extends BaseHibernateDAO {
@@ -50,11 +47,11 @@ public class BottleDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Bottle findById(sse.ustc.driftbottle.data.BottleId id) {
+	public Bottle findById(sse.ustc.driftbottle.DAO.BottleId id) {
 		log.debug("getting Bottle instance with id: " + id);
 		try {
 			Bottle instance = (Bottle) getSession().get(
-					"sse.ustc.driftbottle.data.Bottle", id);
+					"sse.ustc.driftbottle.DAO.Bottle", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -66,7 +63,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("finding Bottle instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.data.Bottle")
+					.createCriteria("sse.ustc.driftbottle.DAO.Bottle")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

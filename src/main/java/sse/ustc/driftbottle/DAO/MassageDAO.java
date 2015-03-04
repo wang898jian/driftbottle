@@ -8,9 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.data.Massage;
-import sse.ustc.driftbottle.data.MassageId;
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Massage entities. Transaction control of the save(), update() and delete()
@@ -19,7 +16,7 @@ import sse.ustc.driftbottle.data.MassageId;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.data.Massage
+ * @see sse.ustc.driftbottle.DAO.Massage
  * @author MyEclipse Persistence Tools
  */
 public class MassageDAO extends BaseHibernateDAO {
@@ -50,11 +47,11 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Massage findById(sse.ustc.driftbottle.data.MassageId id) {
+	public Massage findById(sse.ustc.driftbottle.DAO.MassageId id) {
 		log.debug("getting Massage instance with id: " + id);
 		try {
 			Massage instance = (Massage) getSession().get(
-					"sse.ustc.driftbottle.data.Massage", id);
+					"sse.ustc.driftbottle.DAO.Massage", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -66,7 +63,7 @@ public class MassageDAO extends BaseHibernateDAO {
 		log.debug("finding Massage instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.data.Massage")
+					.createCriteria("sse.ustc.driftbottle.DAO.Massage")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
