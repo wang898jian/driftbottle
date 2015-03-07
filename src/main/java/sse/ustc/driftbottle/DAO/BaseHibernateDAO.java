@@ -11,6 +11,7 @@ import sse.ustc.driftbottle.data.HibernateSessionFactory;
 public class BaseHibernateDAO implements IBaseHibernateDAO {
 	
 	public Session getSession() {
+		
 		return HibernateSessionFactory.getSession();
 	}
 	

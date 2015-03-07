@@ -6,14 +6,27 @@
 <hibernate-configuration>
 
 	<session-factory>
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/driftBottle</property>
+		<property name="dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<property name="connection.url">
+			jdbc:mysql://localhost:3306/driftBottle
+		</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">1231512315</property>
-		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
 		<property name="myeclipse.connection.profile">MysqlDriver</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="show_sql">true</property>
+		<property name="connection.autocommit">true</property>
+		<mapping resource="sse/ustc/driftbottle/DAO/Accessory.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Bottle.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Friends.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Loginformation.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Massage.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Userinfo.hbm.xml" />
 	</session-factory>
 
 </hibernate-configuration>

@@ -1,12 +1,14 @@
-package sse.ustc.driftbottle.pojo;
+package sse.ustc.driftbottle.DAO;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Bottle entity. @author MyEclipse Persistence Tools
  */
-
+@XmlRootElement
 public class Bottle implements java.io.Serializable {
 
 	// Fields

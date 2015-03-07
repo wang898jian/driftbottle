@@ -1,6 +1,7 @@
 package sse.ustc.driftbottle.impl;
 
 import java.io.File;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.ws.rs.Consumes;
@@ -12,19 +13,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import sse.ustc.driftbottle.DAO.Friends;
 import sse.ustc.driftbottle.DAO.FriendsDAO;
+import sse.ustc.driftbottle.DAO.Loginformation;
 import sse.ustc.driftbottle.DAO.LoginformationDAO;
+import sse.ustc.driftbottle.DAO.Userinfo;
 import sse.ustc.driftbottle.DAO.UserinfoDAO;
-import sse.ustc.driftbottle.pojo.Friends;
-import sse.ustc.driftbottle.pojo.Loginformation;
-import sse.ustc.driftbottle.pojo.Userinfo;
 
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 @Entity
 @Path("/myresource")
-public class GetFriends {
+public class FriendsImpl {
 	// TODO: update the class to suit your needs
 	// The Java method will process HTTP GET requests
 	@GET
@@ -56,17 +57,32 @@ public class GetFriends {
 	}
 
 	@GET
-	@Path("/226")
+	@Path("/226ddd")
 	@Produces({ MediaType.TEXT_PLAIN })
 	public String getString() {
-		String c11 = new String("we are best!");
-		return c11;
+		String userName = "nam5";
+		String passwd = "123456";
+		System.out.println(userName);
+		System.out.println(passwd);
+		Loginformation logInfo = new Loginformation();
+		logInfo.setUserName(userName);
+		logInfo.setPassWd(passwd);
+		LoginformationDAO logInforDao = new LoginformationDAO();
+		UserinfoDAO relatinfoDAO = new UserinfoDAO();
+		Userinfo relatinfo = new Userinfo();
+		relatinfo.setUserName(userName);
+		if (logInforDao.findByProperty("userName", userName).isEmpty()) {
+			relatinfoDAO.save(relatinfo);
+			logInforDao.save(logInfo);
+			return "true";
+		} else
+		return "false";
 	}
 
 	@POST
 	@Path("/loginUser")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean loginUser(@FormParam("userName") String userName,
+	public String loginUser(@FormParam("userName") String userName,
 			@FormParam("passwd") String passwd) {
 		// File f = new File("c:/project_bottle/DriftBottle.txt");
 		System.out.println(userName);
@@ -75,29 +91,29 @@ public class GetFriends {
 		LoginformationDAO logInforDao = new LoginformationDAO();
 		Loginformation tmpInfo = logInforDao.findById(userName);
 		if (tmpInfo == null) {
-			return false;
+			return "false";
 		} else {
 			if (tmpInfo.getPassWd() != passwd) {
-				return false;
+				return "false";
 			} else {
 				UserinfoDAO userinfo = new UserinfoDAO();
 				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName);
-				if (logInfo==null) {
+				if (userinfo.findByUserName(userName).isEmpty()) {
 					logInfo = new Userinfo();
 				}
+				logInfo.setUserName(userName);
 				logInfo.setUserState("online");
 				tmpInfo.setUserinfo(logInfo);
 				logInforDao.merge(tmpInfo);
-				return true;
+				return "true";
 			}
-
 		}
 	}
 
 	@POST
 	@Path("/registUser")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean registUser(@FormParam("username") String userName,
+	public String registUser(@FormParam("userName") String userName,
 			@FormParam("passwd") String passwd) {
 		System.out.println(userName);
 		System.out.println(passwd);
@@ -105,11 +121,16 @@ public class GetFriends {
 		logInfo.setUserName(userName);
 		logInfo.setPassWd(passwd);
 		LoginformationDAO logInforDao = new LoginformationDAO();
-		if (logInforDao.findByProperty("userName", userName) == null) {
+		UserinfoDAO relatinfoDAO = new UserinfoDAO();
+		Userinfo relatinfo = new Userinfo();
+		relatinfo.setUserName(userName);
+		if (logInforDao.findByProperty("userName", userName).isEmpty()) {
+			relatinfoDAO.save(relatinfo);
 			logInforDao.save(logInfo);
-			return true;
-		} else
-			return false;
+			return "true";
+		} else {
+			return "false";
+		}
 	}
 
 	// @POST

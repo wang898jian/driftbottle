@@ -8,7 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.pojo.Bottle;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -18,7 +17,7 @@ import sse.ustc.driftbottle.pojo.Bottle;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.pojo.Bottle
+ * @see sse.ustc.driftbottle.DAO.Bottle
  * @author MyEclipse Persistence Tools
  */
 public class BottleDAO extends BaseHibernateDAO {
@@ -49,7 +48,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Bottle findById(sse.ustc.driftbottle.pojo.BottleId id) {
+	public Bottle findById(sse.ustc.driftbottle.DAO.BottleId id) {
 		log.debug("getting Bottle instance with id: " + id);
 		try {
 			Bottle instance = (Bottle) getSession().get(

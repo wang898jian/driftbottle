@@ -7,8 +7,8 @@
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Userinfo" table="userinfo" catalog="driftbottle">
         <id name="userId" type="java.lang.Integer">
-            <column name="UserID" />
-            <generator class="assigned" />
+            <column name="UserID"/>
+            <generator class="increment" />
         </id>
         <property name="userName" type="java.lang.String">
             <column name="UserName" length="48" not-null="true" unique="true" />

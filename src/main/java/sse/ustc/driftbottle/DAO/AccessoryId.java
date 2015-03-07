@@ -1,9 +1,11 @@
-package sse.ustc.driftbottle.pojo;
+package sse.ustc.driftbottle.DAO;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * AccessoryId entity. @author MyEclipse Persistence Tools
  */
-
+@XmlRootElement
 public class AccessoryId implements java.io.Serializable {
 
 	// Fields

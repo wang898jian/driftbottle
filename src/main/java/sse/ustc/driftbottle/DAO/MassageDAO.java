@@ -8,7 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.pojo.Massage;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -18,7 +17,7 @@ import sse.ustc.driftbottle.pojo.Massage;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.pojo.Massage
+ * @see sse.ustc.driftbottle.DAO.Massage
  * @author MyEclipse Persistence Tools
  */
 public class MassageDAO extends BaseHibernateDAO {
@@ -49,7 +48,7 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Massage findById(sse.ustc.driftbottle.pojo.MassageId id) {
+	public Massage findById(sse.ustc.driftbottle.DAO.MassageId id) {
 		log.debug("getting Massage instance with id: " + id);
 		try {
 			Massage instance = (Massage) getSession().get(

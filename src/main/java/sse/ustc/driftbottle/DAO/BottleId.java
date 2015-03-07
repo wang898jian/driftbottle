@@ -1,9 +1,11 @@
-package sse.ustc.driftbottle.pojo;
+package sse.ustc.driftbottle.DAO;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * BottleId entity. @author MyEclipse Persistence Tools
  */
-
+@XmlRootElement
 public class BottleId implements java.io.Serializable {
 
 	// Fields

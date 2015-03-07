@@ -1,9 +1,11 @@
-package sse.ustc.driftbottle.pojo;
+package sse.ustc.driftbottle.DAO;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Loginformation entity. @author MyEclipse Persistence Tools
  */
-
+@XmlRootElement
 public class Loginformation implements java.io.Serializable {
 
 	// Fields

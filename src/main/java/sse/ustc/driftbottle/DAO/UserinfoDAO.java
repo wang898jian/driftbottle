@@ -8,7 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sse.ustc.driftbottle.pojo.Userinfo;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -18,7 +17,7 @@ import sse.ustc.driftbottle.pojo.Userinfo;
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.pojo.Userinfo
+ * @see sse.ustc.driftbottle.DAO.Userinfo
  * @author MyEclipse Persistence Tools
  */
 public class UserinfoDAO extends BaseHibernateDAO {
@@ -34,6 +33,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("saving Userinfo instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
