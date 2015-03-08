@@ -7,7 +7,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Accessory entities. Transaction control of the save(), update() and delete()
@@ -48,7 +47,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Accessory findById(sse.ustc.driftbottle.DAO.AccessoryId id) {
+	public Accessory findById(java.lang.Integer id) {
 		log.debug("getting Accessory instance with id: " + id);
 		try {
 			Accessory instance = (Accessory) getSession().get(

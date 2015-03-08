@@ -3,17 +3,17 @@ package sse.ustc.driftbottle.DAO;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Massage entity. @author MyEclipse Persistence Tools
  */
-@XmlRootElement
+
 public class Massage implements java.io.Serializable {
 
 	// Fields
 
-	private MassageId id;
+	private Integer massageId;
+	private Bottle bottle;
+	private Integer userId;
 	private Integer massageType;
 	private Integer senderUserId;
 	private Set accessories = new HashSet(0);
@@ -25,14 +25,16 @@ public class Massage implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Massage(MassageId id) {
-		this.id = id;
+	public Massage(Bottle bottle, Integer userId) {
+		this.bottle = bottle;
+		this.userId = userId;
 	}
 
 	/** full constructor */
-	public Massage(MassageId id, Integer massageType, Integer senderUserId,
-			Set accessories) {
-		this.id = id;
+	public Massage(Bottle bottle, Integer userId, Integer massageType,
+			Integer senderUserId, Set accessories) {
+		this.bottle = bottle;
+		this.userId = userId;
 		this.massageType = massageType;
 		this.senderUserId = senderUserId;
 		this.accessories = accessories;
@@ -40,12 +42,28 @@ public class Massage implements java.io.Serializable {
 
 	// Property accessors
 
-	public MassageId getId() {
-		return this.id;
+	public Integer getMassageId() {
+		return this.massageId;
 	}
 
-	public void setId(MassageId id) {
-		this.id = id;
+	public void setMassageId(Integer massageId) {
+		this.massageId = massageId;
+	}
+
+	public Bottle getBottle() {
+		return this.bottle;
+	}
+
+	public void setBottle(Bottle bottle) {
+		this.bottle = bottle;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Integer getMassageType() {

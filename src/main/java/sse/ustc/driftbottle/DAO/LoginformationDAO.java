@@ -115,6 +115,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 			Loginformation result = (Loginformation) getSession().merge(
 					detachedInstance);
 			log.debug("merge successful");
+			getSession().flush();
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);

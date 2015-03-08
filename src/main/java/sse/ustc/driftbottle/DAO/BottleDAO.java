@@ -8,7 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Bottle entities. Transaction control of the save(), update() and delete()
@@ -24,7 +23,6 @@ public class BottleDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(BottleDAO.class);
 	// property constants
 	public static final String BOTTLE_TYPE = "bottleType";
-	public static final String SENDER_USER_ID = "senderUserId";
 
 	public void save(Bottle transientInstance) {
 		log.debug("saving Bottle instance");
@@ -48,7 +46,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Bottle findById(sse.ustc.driftbottle.DAO.BottleId id) {
+	public Bottle findById(java.lang.Integer id) {
 		log.debug("getting Bottle instance with id: " + id);
 		try {
 			Bottle instance = (Bottle) getSession().get(
@@ -92,10 +90,6 @@ public class BottleDAO extends BaseHibernateDAO {
 
 	public List findByBottleType(Object bottleType) {
 		return findByProperty(BOTTLE_TYPE, bottleType);
-	}
-
-	public List findBySenderUserId(Object senderUserId) {
-		return findByProperty(SENDER_USER_ID, senderUserId);
 	}
 
 	public List findAll() {

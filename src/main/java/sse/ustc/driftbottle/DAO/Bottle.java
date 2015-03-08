@@ -3,19 +3,19 @@ package sse.ustc.driftbottle.DAO;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Bottle entity. @author MyEclipse Persistence Tools
  */
-@XmlRootElement
+
 public class Bottle implements java.io.Serializable {
 
 	// Fields
 
-	private BottleId id;
+	private Integer bottleId;
+	private Userinfo userinfoByUserId;
+	private Userinfo userinfoBySenderUserId;
 	private Integer bottleType;
-	private Integer senderUserId;
+	private Set accessories = new HashSet(0);
 	private Set massages = new HashSet(0);
 
 	// Constructors
@@ -25,27 +25,47 @@ public class Bottle implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Bottle(BottleId id) {
-		this.id = id;
+	public Bottle(Integer bottleId, Userinfo userinfoByUserId) {
+		this.bottleId = bottleId;
+		this.userinfoByUserId = userinfoByUserId;
 	}
 
 	/** full constructor */
-	public Bottle(BottleId id, Integer bottleType, Integer senderUserId,
-			Set massages) {
-		this.id = id;
+	public Bottle(Integer bottleId, Userinfo userinfoByUserId,
+			Userinfo userinfoBySenderUserId, Integer bottleType,
+			Set accessories, Set massages) {
+		this.bottleId = bottleId;
+		this.userinfoByUserId = userinfoByUserId;
+		this.userinfoBySenderUserId = userinfoBySenderUserId;
 		this.bottleType = bottleType;
-		this.senderUserId = senderUserId;
+		this.accessories = accessories;
 		this.massages = massages;
 	}
 
 	// Property accessors
 
-	public BottleId getId() {
-		return this.id;
+	public Integer getBottleId() {
+		return this.bottleId;
 	}
 
-	public void setId(BottleId id) {
-		this.id = id;
+	public void setBottleId(Integer bottleId) {
+		this.bottleId = bottleId;
+	}
+
+	public Userinfo getUserinfoByUserId() {
+		return this.userinfoByUserId;
+	}
+
+	public void setUserinfoByUserId(Userinfo userinfoByUserId) {
+		this.userinfoByUserId = userinfoByUserId;
+	}
+
+	public Userinfo getUserinfoBySenderUserId() {
+		return this.userinfoBySenderUserId;
+	}
+
+	public void setUserinfoBySenderUserId(Userinfo userinfoBySenderUserId) {
+		this.userinfoBySenderUserId = userinfoBySenderUserId;
 	}
 
 	public Integer getBottleType() {
@@ -56,12 +76,12 @@ public class Bottle implements java.io.Serializable {
 		this.bottleType = bottleType;
 	}
 
-	public Integer getSenderUserId() {
-		return this.senderUserId;
+	public Set getAccessories() {
+		return this.accessories;
 	}
 
-	public void setSenderUserId(Integer senderUserId) {
-		this.senderUserId = senderUserId;
+	public void setAccessories(Set accessories) {
+		this.accessories = accessories;
 	}
 
 	public Set getMassages() {

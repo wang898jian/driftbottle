@@ -6,17 +6,16 @@
 -->
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Massage" table="massage" catalog="driftbottle">
-        <composite-id name="id" class="sse.ustc.driftbottle.DAO.MassageId">
-            <key-property name="bottleId" type="java.lang.Integer">
-                <column name="BottleID" />
-            </key-property>
-            <key-property name="massageId" type="java.lang.Integer">
-                <column name="MassageID" />
-            </key-property>
-            <key-property name="userId" type="java.lang.Integer">
-                <column name="UserID" />
-            </key-property>
-        </composite-id>
+        <id name="massageId" type="java.lang.Integer">
+            <column name="MassageID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="bottle" class="sse.ustc.driftbottle.DAO.Bottle" fetch="select">
+            <column name="BottleID" not-null="true" />
+        </many-to-one>
+        <property name="userId" type="java.lang.Integer">
+            <column name="UserID" not-null="true" />
+        </property>
         <property name="massageType" type="java.lang.Integer">
             <column name="MassageType" />
         </property>
@@ -25,9 +24,7 @@
         </property>
         <set name="accessories" inverse="true">
             <key>
-                <column name="BottleID" not-null="true" />
                 <column name="MassageID" not-null="true" />
-                <column name="UserID" not-null="true" />
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
         </set>

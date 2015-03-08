@@ -8,7 +8,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Massage entities. Transaction control of the save(), update() and delete()
@@ -23,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class MassageDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(MassageDAO.class);
 	// property constants
+	public static final String USER_ID = "userId";
 	public static final String MASSAGE_TYPE = "massageType";
 	public static final String SENDER_USER_ID = "senderUserId";
 
@@ -48,7 +48,7 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Massage findById(sse.ustc.driftbottle.DAO.MassageId id) {
+	public Massage findById(java.lang.Integer id) {
 		log.debug("getting Massage instance with id: " + id);
 		try {
 			Massage instance = (Massage) getSession().get(
@@ -88,6 +88,10 @@ public class MassageDAO extends BaseHibernateDAO {
 			log.error("find by property name failed", re);
 			throw re;
 		}
+	}
+
+	public List findByUserId(Object userId) {
+		return findByProperty(USER_ID, userId);
 	}
 
 	public List findByMassageType(Object massageType) {
