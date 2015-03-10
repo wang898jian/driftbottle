@@ -14,7 +14,7 @@ public class Massage implements java.io.Serializable {
 	private Integer massageId;
 	private Bottle bottle;
 	private Integer userId;
-	private Integer massageType;
+	private String text;
 	private Integer senderUserId;
 	private Set accessories = new HashSet(0);
 
@@ -25,17 +25,18 @@ public class Massage implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Massage(Bottle bottle, Integer userId) {
+	public Massage(Bottle bottle, Integer userId, String text) {
 		this.bottle = bottle;
 		this.userId = userId;
+		this.text = text;
 	}
 
 	/** full constructor */
-	public Massage(Bottle bottle, Integer userId, Integer massageType,
+	public Massage(Bottle bottle, Integer userId, String text,
 			Integer senderUserId, Set accessories) {
 		this.bottle = bottle;
 		this.userId = userId;
-		this.massageType = massageType;
+		this.text = text;
 		this.senderUserId = senderUserId;
 		this.accessories = accessories;
 	}
@@ -66,12 +67,12 @@ public class Massage implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	public Integer getMassageType() {
-		return this.massageType;
+	public String getText() {
+		return this.text;
 	}
 
-	public void setMassageType(Integer massageType) {
-		this.massageType = massageType;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Integer getSenderUserId() {

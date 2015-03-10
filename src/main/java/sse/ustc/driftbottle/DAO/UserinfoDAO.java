@@ -8,7 +8,7 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+import sse.ustc.driftbottle.DAO.Userinfo;
 /**
  * A data access object (DAO) providing persistence and search support for
  * Userinfo entities. Transaction control of the save(), update() and delete()
@@ -28,6 +28,8 @@ public class UserinfoDAO extends BaseHibernateDAO {
 	public static final String REAL_NAME = "realName";
 	public static final String USER_ADDRESS = "userAddress";
 	public static final String USER_STATE = "userState";
+	public static final String FIRST_BOTTLE_TIME = "firstBottleTime";
+	public static final String LAST_BOTTLE_TIME = "lastBottleTime";
 
 	public void save(Userinfo transientInstance) {
 		log.debug("saving Userinfo instance");
@@ -45,6 +47,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("deleting Userinfo instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -57,6 +60,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		try {
 			Userinfo instance = (Userinfo) getSession().get(
 					"sse.ustc.driftbottle.DAO.Userinfo", id);
+			getSession().flush();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -70,6 +74,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 			List results = getSession()
 					.createCriteria("sse.ustc.driftbottle.DAO.Userinfo")
 					.add(Example.create(instance)).list();
+			getSession().flush();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -87,6 +92,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 					+ propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
+			getSession().flush();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -110,11 +116,20 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		return findByProperty(USER_STATE, userState);
 	}
 
+	public List findByFirstBottleTime(Object firstBottleTime) {
+		return findByProperty(FIRST_BOTTLE_TIME, firstBottleTime);
+	}
+
+	public List findByLastBottleTime(Object lastBottleTime) {
+		return findByProperty(LAST_BOTTLE_TIME, lastBottleTime);
+	}
+
 	public List findAll() {
 		log.debug("finding all Userinfo instances");
 		try {
 			String queryString = "from Userinfo";
 			Query queryObject = getSession().createQuery(queryString);
+			getSession().flush();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -126,6 +141,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("merging Userinfo instance");
 		try {
 			Userinfo result = (Userinfo) getSession().merge(detachedInstance);
+			getSession().flush();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -138,6 +154,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty Userinfo instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -150,6 +167,7 @@ public class UserinfoDAO extends BaseHibernateDAO {
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");
+			getSession().flush();
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
 			throw re;

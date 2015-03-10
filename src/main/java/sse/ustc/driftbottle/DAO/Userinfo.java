@@ -3,115 +3,163 @@ package sse.ustc.driftbottle.DAO;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Userinfo entity. @author MyEclipse Persistence Tools
  */
-@XmlRootElement
-public class Userinfo implements java.io.Serializable {
 
-	// Fields
+public class Userinfo  implements java.io.Serializable {
 
-	private Integer userId;
-	private String userName;
-	private String realName;
-	private String userAddress;
-	private String userState;
-	private Friends friends;
-	private Set bottles = new HashSet(0);
-	private Loginformation loginformation;
 
-	// Constructors
+    // Fields    
 
-	/** default constructor */
-	public Userinfo() {
-	}
+     private Integer userId;
+     private String userName;
+     private String realName;
+     private String userAddress;
+     private String userState;
+     private String firstBottleTime;
+     private String lastBottleTime;
+     private Set bottlesForSenderUserId = new HashSet(0);
+     private Friends friends;
+     private Set bottlesForUserId = new HashSet(0);
+     private Set accessories = new HashSet(0);
+     private Loginformation loginformation;
+
+
+    // Constructors
+
+    /** default constructor */
+    public Userinfo() {
+    }
 
 	/** minimal constructor */
-	public Userinfo(Integer userId, String userName) {
-		this.userId = userId;
-		this.userName = userName;
-	}
+    public Userinfo(Integer userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+    }
+    
+    /** full constructor */
+    public Userinfo(Integer userId, String userName, String realName, String userAddress, String userState, String firstBottleTime, String lastBottleTime, Set bottlesForSenderUserId, Friends friends, Set bottlesForUserId, Set accessories, Loginformation loginformation) {
+        this.userId = userId;
+        this.userName = userName;
+        this.realName = realName;
+        this.userAddress = userAddress;
+        this.userState = userState;
+        this.firstBottleTime = firstBottleTime;
+        this.lastBottleTime = lastBottleTime;
+        this.bottlesForSenderUserId = bottlesForSenderUserId;
+        this.friends = friends;
+        this.bottlesForUserId = bottlesForUserId;
+        this.accessories = accessories;
+        this.loginformation = loginformation;
+    }
 
-	/** full constructor */
-	public Userinfo(Integer userId, String userName, String realName,
-			String userAddress, String userState, Friends friends, Set bottles,
-			Loginformation loginformation) {
-		this.userId = userId;
-		this.userName = userName;
-		this.realName = realName;
-		this.userAddress = userAddress;
-		this.userState = userState;
-		this.friends = friends;
-		this.bottles = bottles;
-		this.loginformation = loginformation;
-	}
+   
+    // Property accessors
 
-	// Property accessors
+    public Integer getUserId() {
+        return this.userId;
+    }
+    
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public Integer getUserId() {
-		return this.userId;
-	}
+    public String getUserName() {
+        return this.userName;
+    }
+    
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public String getRealName() {
+        return this.realName;
+    }
+    
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-	public String getUserName() {
-		return this.userName;
-	}
+    public String getUserAddress() {
+        return this.userAddress;
+    }
+    
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserState() {
+        return this.userState;
+    }
+    
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
 
-	public String getRealName() {
-		return this.realName;
-	}
+    public String getFirstBottleTime() {
+        return this.firstBottleTime;
+    }
+    
+    public void setFirstBottleTime(String firstBottleTime) {
+        this.firstBottleTime = firstBottleTime;
+    }
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public String getLastBottleTime() {
+        return this.lastBottleTime;
+    }
+    
+    public void setLastBottleTime(String lastBottleTime) {
+        this.lastBottleTime = lastBottleTime;
+    }
 
-	public String getUserAddress() {
-		return this.userAddress;
-	}
+    public Set getBottlesForSenderUserId() {
+        return this.bottlesForSenderUserId;
+    }
+    
+    public void setBottlesForSenderUserId(Set bottlesForSenderUserId) {
+        this.bottlesForSenderUserId = bottlesForSenderUserId;
+    }
 
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
+    public Friends getFriends() {
+        return this.friends;
+    }
+    
+    public void setFriends(Friends friends) {
+        this.friends = friends;
+    }
 
-	public String getUserState() {
-		return this.userState;
-	}
+    public Set getBottlesForUserId() {
+        return this.bottlesForUserId;
+    }
+    
+    public void setBottlesForUserId(Set bottlesForUserId) {
+        this.bottlesForUserId = bottlesForUserId;
+    }
 
-	public void setUserState(String userState) {
-		this.userState = userState;
-	}
+    public Set getAccessories() {
+        return this.accessories;
+    }
+    
+    public void setAccessories(Set accessories) {
+        this.accessories = accessories;
+    }
 
-	public Friends getFriends() {
-		return this.friends;
-	}
+    public Loginformation getLoginformation() {
+        return this.loginformation;
+    }
+    
+    public void setLoginformation(Loginformation loginformation) {
+        this.loginformation = loginformation;
+    }
+   
 
-	public void setFriends(Friends friends) {
-		this.friends = friends;
-	}
 
-	public Set getBottles() {
-		return this.bottles;
-	}
 
-	public void setBottles(Set bottles) {
-		this.bottles = bottles;
-	}
 
-	public Loginformation getLoginformation() {
-		return this.loginformation;
-	}
 
-	public void setLoginformation(Loginformation loginformation) {
-		this.loginformation = loginformation;
-	}
+
+
 
 }

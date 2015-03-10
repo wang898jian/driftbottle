@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Sun Mar 08 11:57:46 CST 2015
+#Sun Mar 08 21:10:01 CST 2015
 genBasicCompId=false
 sessionFactoryName=sse.ustc.driftbottle.data.HibernateSessionFactory
 profile=

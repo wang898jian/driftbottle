@@ -23,13 +23,14 @@ public class MassageDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(MassageDAO.class);
 	// property constants
 	public static final String USER_ID = "userId";
-	public static final String MASSAGE_TYPE = "massageType";
+	public static final String TEXT = "text";
 	public static final String SENDER_USER_ID = "senderUserId";
 
 	public void save(Massage transientInstance) {
 		log.debug("saving Massage instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -94,8 +95,8 @@ public class MassageDAO extends BaseHibernateDAO {
 		return findByProperty(USER_ID, userId);
 	}
 
-	public List findByMassageType(Object massageType) {
-		return findByProperty(MASSAGE_TYPE, massageType);
+	public List findByText(Object text) {
+		return findByProperty(TEXT, text);
 	}
 
 	public List findBySenderUserId(Object senderUserId) {

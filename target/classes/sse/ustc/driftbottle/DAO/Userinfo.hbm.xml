@@ -7,8 +7,8 @@
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Userinfo" table="userinfo" catalog="driftbottle">
         <id name="userId" type="java.lang.Integer">
-            <column name="UserID"/>
-            <generator class="increment" />
+            <column name="UserID" />
+            <generator class="assigned" />
         </id>
         <property name="userName" type="java.lang.String">
             <column name="UserName" length="48" not-null="true" unique="true" />
@@ -22,12 +22,30 @@
         <property name="userState" type="java.lang.String">
             <column name="UserState" length="1024" />
         </property>
+        <property name="firstBottleTime" type="java.lang.String">
+            <column name="firstBottleTime" length="45" />
+        </property>
+        <property name="lastBottleTime" type="java.lang.String">
+            <column name="lastBottleTime" length="45" />
+        </property>
+        <set name="bottlesForSenderUserId" inverse="true">
+            <key>
+                <column name="SenderUserID" />
+            </key>
+            <one-to-many class="sse.ustc.driftbottle.DAO.Bottle" />
+        </set>
         <one-to-one name="friends" class="sse.ustc.driftbottle.DAO.Friends"></one-to-one>
-        <set name="bottles" inverse="true">
+        <set name="bottlesForUserId" inverse="true">
             <key>
                 <column name="UserID" not-null="true" />
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Bottle" />
+        </set>
+        <set name="accessories" inverse="true">
+            <key>
+                <column name="UserID" not-null="true" />
+            </key>
+            <one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
         </set>
         <one-to-one name="loginformation" class="sse.ustc.driftbottle.DAO.Loginformation"></one-to-one>
     </class>
