@@ -8,7 +8,7 @@
     <class name="sse.ustc.driftbottle.DAO.Bottle" table="bottle" catalog="driftbottle">
         <id name="bottleId" type="java.lang.Integer">
             <column name="BottleID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="userinfoByUserId" class="sse.ustc.driftbottle.DAO.Userinfo" fetch="select">
             <column name="UserID" not-null="true" />

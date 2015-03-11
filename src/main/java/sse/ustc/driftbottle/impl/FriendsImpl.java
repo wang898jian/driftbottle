@@ -56,31 +56,6 @@ public class FriendsImpl {
 		return a1;
 	}
 
-//	@GET
-//	@Path("/bottle")
-//	@Produces({MediaType.APPLICATION_JSON})
-//	public String getBottle(@FormParam("userName") String userN) {
-//		String userName = "nam5";
-//		String passwd = "123456";
-//		System.out.println(userName);
-//		System.out.println(passwd);
-//		Loginformation logInfo = new Loginformation();
-//		logInfo.setUserName(userName);
-//		logInfo.setPassWd(passwd);
-//		LoginformationDAO logInforDao = new LoginformationDAO();
-//		UserinfoDAO relatinfoDAO = new UserinfoDAO();
-//		Userinfo relatinfo = new Userinfo();
-//		relatinfo.setUserName(userName);
-//		if (logInforDao.findByProperty("userName", userName).isEmpty()) {
-//			relatinfoDAO.save(relatinfo);
-//			logInforDao.save(logInfo);
-//			return "true";
-//		} else
-//		return "false";
-//	}
-	
-	
-	
 	@GET
 	@Path("/226ddd")
 	@Produces({ MediaType.TEXT_PLAIN })
@@ -157,17 +132,6 @@ public class FriendsImpl {
 			return "false";
 		}
 	}
-
-	// @POST
-	// @Path("/addJson")
-	// @Produces(MediaType.TEXT_PLAIN)
-	// @Consumes({ MediaType.APPLICATION_JSON })
-	// public String addJson(userTest name) {
-	// // File f = new File("c:/project_bottle/DriftBottle.txt");
-	// System.out.println(name.getName());
-	// System.out.println(name.getPassword());
-	// return "asdfasdfasd";
-	// }
 
 	@POST
 	@Path("/addJson1")
