@@ -76,7 +76,43 @@ public class FriendsImpl {
 			logInforDao.save(logInfo);
 			return "true";
 		} else
-		return "false";
+			return "false";
+	}
+
+	@GET
+	@Path("/loginUserTest")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String loginUser() {
+		// File f = new File("c:/project_bottle/DriftBottle.txt");
+		String userName = "13675517749";
+		String passwd = "123456";
+		System.out.println(userName);
+		System.out.println(passwd);
+
+		LoginformationDAO logInforDao = new LoginformationDAO();
+		Loginformation tmpInfo = (Loginformation) logInforDao.findByProperty(
+				"userName", userName).get(0);
+
+		if (tmpInfo.getUserName().isEmpty()) {
+			System.out.println("input is null!");
+			return "false";
+		} else {
+			if (!tmpInfo.getPassWd().equals(passwd)) {
+				System.out.println("passwd is wrong!");
+				return "false";
+			} else {
+				UserinfoDAO userinfo = new UserinfoDAO();
+				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName).get(0);
+				System.out.println("find logInfo!");
+				if (userinfo.findByUserName(userName).isEmpty()) {
+					logInfo = new Userinfo();
+				}
+				logInfo.setUserName(userName);
+				logInfo.setUserState("online");
+				userinfo.attachDirty(logInfo);
+				return "true";
+			}
+		}
 	}
 
 	@POST
@@ -89,22 +125,26 @@ public class FriendsImpl {
 		System.out.println(passwd);
 
 		LoginformationDAO logInforDao = new LoginformationDAO();
-		Loginformation tmpInfo = logInforDao.findById(userName);
-		if (tmpInfo == null) {
+		Loginformation tmpInfo = (Loginformation) logInforDao.findByProperty(
+				"userName", userName).get(0);
+
+		if (tmpInfo.getUserName().isEmpty()) {
+			System.out.println("input is null!");
 			return "false";
 		} else {
-			if (tmpInfo.getPassWd() != passwd) {
+			if (!tmpInfo.getPassWd().equals(passwd)) {
+				System.out.println("passwd is wrong!");
 				return "false";
 			} else {
 				UserinfoDAO userinfo = new UserinfoDAO();
-				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName);
+				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName).get(0);
+				System.out.println("find logInfo!");
 				if (userinfo.findByUserName(userName).isEmpty()) {
 					logInfo = new Userinfo();
 				}
 				logInfo.setUserName(userName);
 				logInfo.setUserState("online");
-				tmpInfo.setUserinfo(logInfo);
-				logInforDao.merge(tmpInfo);
+				userinfo.attachDirty(logInfo);
 				return "true";
 			}
 		}

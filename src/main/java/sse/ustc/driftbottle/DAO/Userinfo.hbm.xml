@@ -47,6 +47,5 @@
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
         </set>
-        <one-to-one name="loginformation" class="sse.ustc.driftbottle.DAO.Loginformation"></one-to-one>
     </class>
 </hibernate-mapping>

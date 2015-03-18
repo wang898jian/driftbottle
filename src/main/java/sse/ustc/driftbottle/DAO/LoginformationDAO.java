@@ -7,7 +7,6 @@ import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * A data access object (DAO) providing persistence and search support for
  * Loginformation entities. Transaction control of the save(), update() and
@@ -30,12 +29,9 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		try {
 			getSession().save(transientInstance);
 			getSession().flush();
-			System.out.println(transientInstance.toString());
 			log.debug("save successful");
-			System.out.println("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
-			System.out.println("save failed");
 			throw re;
 		}
 	}
@@ -44,6 +40,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		log.debug("deleting Loginformation instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -52,23 +49,38 @@ public class LoginformationDAO extends BaseHibernateDAO {
 	}
 
 	public Loginformation findById(java.lang.String id) {
+		System.out.print("getting Loginformation instance with id: ");
 		log.debug("getting Loginformation instance with id: " + id);
 		try {
 			Loginformation instance = (Loginformation) getSession().get(
 					"sse.ustc.driftbottle.DAO.Loginformation", id);
+			getSession().flush();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;
 		}
 	}
-
+//	public Loginformation findByIdTest(java.lang.String id) {
+//		System.out.print("getting Loginformation instance with id: ");
+//		log.debug("getting Loginformation instance with id: " + id);
+//		try {
+//			 List<Loginformation> list = getSession()
+//					 .createQuery("select t from Loginformation t where t.username=:userName")
+//					 .setParameter("userName", id).list();  
+//			 return list.isEmpty() ? null : list.get(0);
+//		} catch (RuntimeException re) {
+//			log.error("get failed", re);
+//			throw re;
+//		}
+//	}
 	public List findByExample(Loginformation instance) {
 		log.debug("finding Loginformation instance by example");
 		try {
 			List results = getSession()
 					.createCriteria("sse.ustc.driftbottle.DAO.Loginformation")
 					.add(Example.create(instance)).list();
+			getSession().flush();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -86,6 +98,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 					+ propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
+			getSession().flush();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
@@ -102,6 +115,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		try {
 			String queryString = "from Loginformation";
 			Query queryObject = getSession().createQuery(queryString);
+			getSession().flush();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -114,8 +128,8 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		try {
 			Loginformation result = (Loginformation) getSession().merge(
 					detachedInstance);
-			log.debug("merge successful");
 			getSession().flush();
+			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
 			log.error("merge failed", re);
@@ -127,6 +141,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty Loginformation instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -138,6 +153,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		log.debug("attaching clean Loginformation instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

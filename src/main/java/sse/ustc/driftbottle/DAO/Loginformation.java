@@ -11,7 +11,6 @@ public class Loginformation implements java.io.Serializable {
 	// Fields
 
 	private String userName;
-	private Userinfo userinfo;
 	private String passWd;
 
 	// Constructors
@@ -23,13 +22,13 @@ public class Loginformation implements java.io.Serializable {
 	/** minimal constructor */
 	public Loginformation(String userName, Userinfo userinfo) {
 		this.userName = userName;
-		this.userinfo = userinfo;
+
 	}
 
 	/** full constructor */
 	public Loginformation(String userName, Userinfo userinfo, String passWd) {
 		this.userName = userName;
-		this.userinfo = userinfo;
+
 		this.passWd = passWd;
 	}
 
@@ -43,13 +42,8 @@ public class Loginformation implements java.io.Serializable {
 		this.userName = userName;
 	}
 
-	public Userinfo getUserinfo() {
-		return this.userinfo;
-	}
 
-	public void setUserinfo(Userinfo userinfo) {
-		this.userinfo = userinfo;
-	}
+
 
 	public String getPassWd() {
 		return this.passWd;

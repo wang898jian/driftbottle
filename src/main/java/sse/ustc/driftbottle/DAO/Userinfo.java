@@ -24,7 +24,7 @@ public class Userinfo  implements java.io.Serializable {
      private Friends friends;
      private Set bottlesForUserId = new HashSet(0);
      private Set accessories = new HashSet(0);
-     private Loginformation loginformation;
+
 
 
     // Constructors
@@ -52,7 +52,6 @@ public class Userinfo  implements java.io.Serializable {
         this.friends = friends;
         this.bottlesForUserId = bottlesForUserId;
         this.accessories = accessories;
-        this.loginformation = loginformation;
     }
 
    
@@ -146,14 +145,7 @@ public class Userinfo  implements java.io.Serializable {
         this.accessories = accessories;
     }
 
-    public Loginformation getLoginformation() {
-        return this.loginformation;
-    }
-    
-    public void setLoginformation(Loginformation loginformation) {
-        this.loginformation = loginformation;
-    }
-   
+
 
 
 
