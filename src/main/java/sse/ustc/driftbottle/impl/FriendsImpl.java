@@ -74,7 +74,7 @@ public class FriendsImpl {
 		if (logInforDao.findByProperty("userName", userName).isEmpty()) {
 			relatinfoDAO.save(relatinfo);
 			logInforDao.save(logInfo);
-			return "true";
+			return relatinfo.getUserId().toString();
 		} else
 			return "false";
 	}
