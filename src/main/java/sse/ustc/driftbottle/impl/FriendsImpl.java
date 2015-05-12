@@ -1,13 +1,20 @@
 package sse.ustc.driftbottle.impl;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.util.UUID;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,7 +27,10 @@ import sse.ustc.driftbottle.DAO.LoginformationDAO;
 import sse.ustc.driftbottle.DAO.Userinfo;
 import sse.ustc.driftbottle.DAO.UserinfoDAO;
 
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.FormDataParam;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 @Entity
@@ -102,7 +112,8 @@ public class FriendsImpl {
 				return "false";
 			} else {
 				UserinfoDAO userinfo = new UserinfoDAO();
-				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName).get(0);
+				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName)
+						.get(0);
 				System.out.println("find logInfo!");
 				if (userinfo.findByUserName(userName).isEmpty()) {
 					logInfo = new Userinfo();
@@ -137,7 +148,8 @@ public class FriendsImpl {
 				return "false";
 			} else {
 				UserinfoDAO userinfo = new UserinfoDAO();
-				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName).get(0);
+				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName)
+						.get(0);
 				System.out.println("find logInfo!");
 				if (userinfo.findByUserName(userName).isEmpty()) {
 					logInfo = new Userinfo();
@@ -150,6 +162,59 @@ public class FriendsImpl {
 		}
 	}
 
+	@POST
+	@Path("/sendFile")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+
+	public String sendFile(FormDataMultiPart multiPart) throws IOException {
+		if (multiPart == null) {
+			System.out.println("multipart is Null!");
+			return "false";
+		}
+		List<FormDataBodyPart> l= multiPart.getFields("file");
+		Integer bottleID = Integer.parseInt(multiPart.getField("bottleID")
+				.getValue());
+		String name = multiPart.getField("type").getValue();
+		String data = multiPart.getField("body").getValue();
+		File fp = new File("accessory");
+		System.out.println("i am in!");
+		if (fp.mkdir())
+			;
+		File file = new File("accessory/" + bottleID + "/" + name);
+		if (!file.exists()) {
+			file.createNewFile();
+		} else {
+			return "the file" + name + " has already exist!";
+		}
+		FileWriter fileWritter = new FileWriter(file.getName(), true);
+		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+		bufferWritter.write(data);
+		bufferWritter.close();
+		System.out.println("Done");
+		return "success";
+	}
+	@POST
+	@Path("/sendFile2")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sendFile2(FormDataMultiPart multiPart) throws IOException {
+		if (multiPart == null) {
+			System.out.println("multipart is Null!");
+			return "false";
+		}
+		List<FormDataBodyPart> l= multiPart.getFields("file");
+		for (FormDataBodyPart p : l) {
+			InputStream is=p.getValueAs(InputStream.class);
+			FormDataContentDisposition detail=p.getFormDataContentDisposition();
+			String rootPath=new File("").getAbsolutePath();
+			rootPath+= File.separator+"webapps";
+
+			//拼接文件目录
+			String imageFileLocation = rootPath + File.separator+"res"+ File.separator
+					+ System.currentTimeMillis() + "."
+					+ p.getMediaType();
+			File image=writeToFile(is, imageFileLocation);}
+		return "success";
+	}
 	@POST
 	@Path("/registUser")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -171,6 +236,54 @@ public class FriendsImpl {
 		} else {
 			return "false";
 		}
+	}
+
+	@POST
+	@Path("/saveFile")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public String saveFile(@FormDataParam("file") InputStream imageInputStream,
+			@FormDataParam("file") FormDataContentDisposition imageDetail,
+			@FormParam("bottleID") String bottleID,
+			@FormParam("accessoryID") String accessoryID) throws IOException {
+		String rootPath = new File("").getAbsolutePath();
+		rootPath += File.separator + "webapps";
+
+		// 拼接文件目录
+		String imageFileLocation = rootPath + File.separator + "res"
+				+ File.separator + System.currentTimeMillis() + "."
+				+ imageDetail.getType();
+		File image = writeToFile(imageInputStream, imageFileLocation);
+		return "success";
+	}
+
+	public static File writeToFile(InputStream is, String uploadedFileLocation) {
+		// TODO Auto-generated method stub
+		File file = new File(uploadedFileLocation);
+		OutputStream os = null;
+		try {
+			os = new FileOutputStream(file);
+			byte buffer[] = new byte[4 * 1024];
+			while ((is.read(buffer)) != -1) {
+				os.write(buffer);
+			}
+			os.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				os.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(uploadedFileLocation + "文件大小" + file.length());
+		if (file.length() < 5) {
+			file.delete();
+			return null;
+		}
+		return file;
+
 	}
 
 	@POST
