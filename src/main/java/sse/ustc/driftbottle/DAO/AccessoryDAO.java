@@ -47,7 +47,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Accessory findById(java.lang.Integer id) {
+	public Accessory findById(java.lang.String id) {
 		log.debug("getting Accessory instance with id: " + id);
 		try {
 			Accessory instance = (Accessory) getSession().get(

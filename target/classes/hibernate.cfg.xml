@@ -25,7 +25,7 @@
 		<mapping resource="sse/ustc/driftbottle/DAO/Bottle.hbm.xml" />
 		<mapping resource="sse/ustc/driftbottle/DAO/Friends.hbm.xml" />
 		<mapping resource="sse/ustc/driftbottle/DAO/Loginformation.hbm.xml" />
-		<mapping resource="sse/ustc/driftbottle/DAO/Massage.hbm.xml" />
+		<mapping resource="sse/ustc/driftbottle/DAO/Message.hbm.xml" />
 		<mapping resource="sse/ustc/driftbottle/DAO/Userinfo.hbm.xml" />
 	</session-factory>
 

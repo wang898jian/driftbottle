@@ -8,7 +8,7 @@
     <class name="sse.ustc.driftbottle.DAO.Userinfo" table="userinfo" catalog="driftbottle">
         <id name="userId" type="java.lang.Integer">
             <column name="UserID" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <property name="userName" type="java.lang.String">
             <column name="UserName" length="48" not-null="true" unique="true" />
@@ -34,6 +34,12 @@
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Bottle" />
         </set>
+        <set name="messagesForUserId" inverse="true">
+            <key>
+                <column name="UserID" not-null="true" />
+            </key>
+            <one-to-many class="sse.ustc.driftbottle.DAO.Message" />
+        </set>
         <one-to-one name="friends" class="sse.ustc.driftbottle.DAO.Friends"></one-to-one>
         <set name="bottlesForUserId" inverse="true">
             <key>
@@ -41,11 +47,18 @@
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Bottle" />
         </set>
+        <one-to-one name="loginformation" class="sse.ustc.driftbottle.DAO.Loginformation"></one-to-one>
         <set name="accessories" inverse="true">
             <key>
                 <column name="UserID" not-null="true" />
             </key>
             <one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
+        </set>
+        <set name="messagesForSenderUserId" inverse="true">
+            <key>
+                <column name="SenderUserID" />
+            </key>
+            <one-to-many class="sse.ustc.driftbottle.DAO.Message" />
         </set>
     </class>
 </hibernate-mapping>

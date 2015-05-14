@@ -8,10 +8,10 @@ public class Accessory implements java.io.Serializable {
 
 	// Fields
 
-	private Integer accessoryId;
+	private String accessoryId;
 	private Bottle bottle;
-	private Massage massage;
 	private Userinfo userinfo;
+	private Object message;
 	private Integer accessoryType;
 	private String accessoryUrl;
 
@@ -22,29 +22,32 @@ public class Accessory implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Accessory(Bottle bottle, Massage massage, Userinfo userinfo) {
+	public Accessory(String accessoryId, Bottle bottle, Userinfo userinfo,
+			Object message) {
+		this.accessoryId = accessoryId;
 		this.bottle = bottle;
-		this.massage = massage;
 		this.userinfo = userinfo;
+		this.message = message;
 	}
 
 	/** full constructor */
-	public Accessory(Bottle bottle, Massage massage, Userinfo userinfo,
-			Integer accessoryType, String accessoryUrl) {
+	public Accessory(String accessoryId, Bottle bottle, Userinfo userinfo,
+			Object message, Integer accessoryType, String accessoryUrl) {
+		this.accessoryId = accessoryId;
 		this.bottle = bottle;
-		this.massage = massage;
 		this.userinfo = userinfo;
+		this.message = message;
 		this.accessoryType = accessoryType;
 		this.accessoryUrl = accessoryUrl;
 	}
 
 	// Property accessors
 
-	public Integer getAccessoryId() {
+	public String getAccessoryId() {
 		return this.accessoryId;
 	}
 
-	public void setAccessoryId(Integer accessoryId) {
+	public void setAccessoryId(String accessoryId) {
 		this.accessoryId = accessoryId;
 	}
 
@@ -56,20 +59,20 @@ public class Accessory implements java.io.Serializable {
 		this.bottle = bottle;
 	}
 
-	public Massage getMassage() {
-		return this.massage;
-	}
-
-	public void setMassage(Massage massage) {
-		this.massage = massage;
-	}
-
 	public Userinfo getUserinfo() {
 		return this.userinfo;
 	}
 
 	public void setUserinfo(Userinfo userinfo) {
 		this.userinfo = userinfo;
+	}
+
+	public Object getMessage() {
+		return this.message;
+	}
+
+	public void setMessage(Object message) {
+		this.message = message;
 	}
 
 	public Integer getAccessoryType() {

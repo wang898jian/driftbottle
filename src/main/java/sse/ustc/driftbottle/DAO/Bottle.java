@@ -11,12 +11,12 @@ public class Bottle implements java.io.Serializable {
 
 	// Fields
 
-	private Integer bottleId;
+	private String bottleId;
 	private Userinfo userinfoByUserId;
 	private Userinfo userinfoBySenderUserId;
 	private Integer bottleType;
+	private Set messages = new HashSet(0);
 	private Set accessories = new HashSet(0);
-	private Set massages = new HashSet(0);
 
 	// Constructors
 
@@ -25,30 +25,37 @@ public class Bottle implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Bottle(Integer bottleId, Userinfo userinfoByUserId) {
+	public Bottle(String bottleId, Userinfo userinfoByUserId) {
 		this.bottleId = bottleId;
 		this.userinfoByUserId = userinfoByUserId;
 	}
 
 	/** full constructor */
-	public Bottle(Integer bottleId, Userinfo userinfoByUserId,
-			Userinfo userinfoBySenderUserId, Integer bottleType,
-			Set accessories, Set massages) {
+	public Bottle(String bottleId, Userinfo userinfoByUserId,
+			Userinfo userinfoBySenderUserId, Integer bottleType, Set messages,
+			Set accessories) {
 		this.bottleId = bottleId;
 		this.userinfoByUserId = userinfoByUserId;
 		this.userinfoBySenderUserId = userinfoBySenderUserId;
 		this.bottleType = bottleType;
+		this.messages = messages;
 		this.accessories = accessories;
-		this.massages = massages;
 	}
 
 	// Property accessors
-
-	public Integer getBottleId() {
+	public Boolean isEmpty()
+	{
+		if (bottleId.equals(null)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public String getBottleId() {
 		return this.bottleId;
 	}
 
-	public void setBottleId(Integer bottleId) {
+	public void setBottleId(String bottleId) {
 		this.bottleId = bottleId;
 	}
 
@@ -76,20 +83,20 @@ public class Bottle implements java.io.Serializable {
 		this.bottleType = bottleType;
 	}
 
+	public Set getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(Set messages) {
+		this.messages = messages;
+	}
+
 	public Set getAccessories() {
 		return this.accessories;
 	}
 
 	public void setAccessories(Set accessories) {
 		this.accessories = accessories;
-	}
-
-	public Set getMassages() {
-		return this.massages;
-	}
-
-	public void setMassages(Set massages) {
-		this.massages = massages;
 	}
 
 }

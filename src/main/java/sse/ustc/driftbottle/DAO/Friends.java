@@ -1,11 +1,9 @@
 package sse.ustc.driftbottle.DAO;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Friends entity. @author MyEclipse Persistence Tools
  */
-@XmlRootElement
+
 public class Friends implements java.io.Serializable {
 
 	// Fields
@@ -19,9 +17,6 @@ public class Friends implements java.io.Serializable {
 
 	/** default constructor */
 	public Friends() {
-		userId=0;
-		friendId = 23;
-		friendName = "asdfgasdf";
 	}
 
 	/** minimal constructor */

@@ -10,6 +10,7 @@
             <column name="UserName" length="48" />
             <generator class="assigned" />
         </id>
+        <one-to-one name="userinfo" class="sse.ustc.driftbottle.DAO.Userinfo" constrained="true"></one-to-one>
         <property name="passWd" type="java.lang.String">
             <column name="PassWd" length="1024" />
         </property>

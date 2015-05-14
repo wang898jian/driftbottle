@@ -1,23 +1,20 @@
 package sse.ustc.driftbottle.impl;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
-import java.util.List;
 import sse.ustc.driftbottle.DAO.Bottle;
 import sse.ustc.driftbottle.DAO.BottleDAO;
 import sse.ustc.driftbottle.DAO.Friends;
-import sse.ustc.driftbottle.DAO.Massage;
-import sse.ustc.driftbottle.DAO.MassageDAO;
-import sse.ustc.driftbottle.DAO.TmpFriends;
+import sse.ustc.driftbottle.DAO.Message;
+import sse.ustc.driftbottle.DAO.MessageDAO;
 
 @Entity
 @Path("/mybottle")
@@ -46,7 +43,7 @@ public class BottleImpl {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Bottle receiveBottle(@FormParam("userId") String userId) {
 		BottleDAO tmpBottleDAO = new BottleDAO();
-		Bottle bottle = (Bottle) tmpBottleDAO.findByPropertyNoMemb("userId",
+		Bottle bottle = (Bottle) tmpBottleDAO.findByProperty("userId",
 				userId);
 		return bottle;
 	}
@@ -62,11 +59,11 @@ public class BottleImpl {
 		tmpBottle.setBottleType(bottleType);
 		tmpBottleDAO.save(tmpBottle);
 		
-		MassageDAO tmpMassageDAO = new MassageDAO();
-		Massage tmpMassage = new Massage();
+		MessageDAO tmpMessageDAO = new MessageDAO();
+		Message tmpMassage = new Message();
 		tmpMassage.setText(text);
 		tmpMassage.setBottle(tmpBottle);
-		tmpMassageDAO.save(tmpMassage);
+		tmpMessageDAO.save(tmpMassage);
 
 		return "false";
 	}
@@ -82,11 +79,11 @@ public class BottleImpl {
 		tmpBottle.setBottleType(bottleType);
 		tmpBottleDAO.save(tmpBottle);
 		
-		MassageDAO tmpMassageDAO = new MassageDAO();
-		Massage tmpMassage = new Massage();
-		tmpMassage.setText(text);
-		tmpMassage.setBottle(tmpBottle);
-		tmpMassageDAO.save(tmpMassage);
+		MessageDAO tmpMessageDAO = new MessageDAO();
+		Message tmpMessage = new Message();
+		tmpMessage.setText(text);
+		tmpMessage.setBottle(tmpBottle);
+		tmpMessageDAO.save(tmpMessage);
 
 		return "true";
 	}

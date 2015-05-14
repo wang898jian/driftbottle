@@ -14,16 +14,19 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import sse.ustc.driftbottle.DAO.Bottle;
+import sse.ustc.driftbottle.DAO.BottleDAO;
 import sse.ustc.driftbottle.DAO.Friends;
 import sse.ustc.driftbottle.DAO.FriendsDAO;
 import sse.ustc.driftbottle.DAO.Loginformation;
 import sse.ustc.driftbottle.DAO.LoginformationDAO;
+import sse.ustc.driftbottle.DAO.Message;
+import sse.ustc.driftbottle.DAO.MessageDAO;
 import sse.ustc.driftbottle.DAO.Userinfo;
 import sse.ustc.driftbottle.DAO.UserinfoDAO;
 
@@ -66,6 +69,7 @@ public class FriendsImpl {
 		return a1;
 	}
 
+	
 	@GET
 	@Path("/226ddd")
 	@Produces({ MediaType.TEXT_PLAIN })
@@ -125,7 +129,48 @@ public class FriendsImpl {
 			}
 		}
 	}
-
+	
+	
+	@POST
+	@Path("/sendBottle")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sendBottle(
+			@FormParam("bottleId") String bottleID,
+			@FormParam("bottleType") Integer bottleType,
+			@FormParam("senderUserId") Integer senderID) {
+		UserinfoDAO userinfoDAO =new UserinfoDAO();
+		Userinfo userinfo = userinfoDAO.findById(senderID);
+		BottleDAO bottleDAO = new BottleDAO();
+		Bottle bottle = new Bottle();
+		bottle.setBottleId(bottleID);
+		bottle.setBottleType(bottleType);
+		bottle.setUserinfoBySenderUserId(userinfo);
+		bottleDAO.attachDirty(bottle);
+		return "false";
+	}
+	
+	@POST
+	@Path("/sendMessage")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String sendMassage(Message message) {
+		System.out.print(message.getText());
+		System.out.println("ooooaaaa");
+		BottleDAO bottleDAO = new BottleDAO();
+		Bottle bottle;
+		if (bottleDAO.findById(message.getBottleId()).isEmpty()==false) {
+			bottle = bottleDAO.findById(message.getBottleId());
+		}else {
+			bottle = new Bottle();
+		}
+		bottle.setBottleId(message.getBottleId());
+		bottleDAO.attachDirty(bottle);
+		message.setBottle(bottle);
+		MessageDAO messageDAO = new MessageDAO();
+		messageDAO.attachDirty(message);
+		return "true";
+	}
+	
 	@POST
 	@Path("/loginUser")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -165,7 +210,7 @@ public class FriendsImpl {
 	@POST
 	@Path("/sendFile")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-
+	@Produces(MediaType.TEXT_PLAIN)
 	public String sendFile(FormDataMultiPart multiPart) throws IOException {
 		if (multiPart == null) {
 			System.out.println("multipart is Null!");
@@ -193,6 +238,7 @@ public class FriendsImpl {
 		System.out.println("Done");
 		return "success";
 	}
+	
 	@POST
 	@Path("/sendFile2")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -289,12 +335,20 @@ public class FriendsImpl {
 	@POST
 	@Path("/addJson1")
 	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes({ MediaType.APPLICATION_JSON })
+	@Consumes({MediaType.APPLICATION_JSON})
 	public String addJson1(@PathParam("Name") int name,
-			@PathParam("Password") int password) {
+			@PathParam("Password") int password,
+			@PathParam("messageId") String messageID,
+			@PathParam("bottleId") String bottleID,
+			@PathParam("senderUserId") Integer senderID,
+			@PathParam("text") String text) {
 		// File f = new File("c:/project_bottle/DriftBottle.txt");
 		System.out.println(name);
 		System.out.println(password);
+		System.out.println(messageID);
+		System.out.println(bottleID);
+		System.out.println(senderID);
+		System.out.println(text);
 		return "asdfasdfasd";
 	}
 

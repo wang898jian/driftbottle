@@ -10,27 +10,24 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A data access object (DAO) providing persistence and search support for
- * Massage entities. Transaction control of the save(), update() and delete()
+ * Message entities. Transaction control of the save(), update() and delete()
  * operations can directly support Spring container-managed transactions or they
  * can be augmented to handle user-managed Spring transactions. Each of these
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see sse.ustc.driftbottle.DAO.Massage
+ * @see sse.ustc.driftbottle.DAO.Message
  * @author MyEclipse Persistence Tools
  */
-public class MassageDAO extends BaseHibernateDAO {
-	private static final Logger log = LoggerFactory.getLogger(MassageDAO.class);
+public class MessageDAO extends BaseHibernateDAO {
+	private static final Logger log = LoggerFactory.getLogger(MessageDAO.class);
 	// property constants
-	public static final String USER_ID = "userId";
 	public static final String TEXT = "text";
-	public static final String SENDER_USER_ID = "senderUserId";
 
-	public void save(Massage transientInstance) {
-		log.debug("saving Massage instance");
+	public void save(Object transientInstance) {
+		log.debug("saving Message instance");
 		try {
 			getSession().save(transientInstance);
-			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -38,8 +35,8 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public void delete(Massage persistentInstance) {
-		log.debug("deleting Massage instance");
+	public void delete(Object persistentInstance) {
+		log.debug("deleting Message instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -49,11 +46,11 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Massage findById(java.lang.Integer id) {
-		log.debug("getting Massage instance with id: " + id);
+	public Object findById(java.lang.String id) {
+		log.debug("getting Message instance with id: " + id);
 		try {
-			Massage instance = (Massage) getSession().get(
-					"sse.ustc.driftbottle.DAO.Massage", id);
+			Object instance = (Object) getSession().get(
+					"sse.ustc.driftbottle.DAO.Message", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -61,11 +58,11 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findByExample(Massage instance) {
-		log.debug("finding Massage instance by example");
+	public List findByExample(Object instance) {
+		log.debug("finding Message instance by example");
 		try {
 			List results = getSession()
-					.createCriteria("sse.ustc.driftbottle.DAO.Massage")
+					.createCriteria("sse.ustc.driftbottle.DAO.Message")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -77,10 +74,10 @@ public class MassageDAO extends BaseHibernateDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Massage instance with property: " + propertyName
+		log.debug("finding Message instance with property: " + propertyName
 				+ ", value: " + value);
 		try {
-			String queryString = "from Massage as model where model."
+			String queryString = "from Message as model where model."
 					+ propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
@@ -91,22 +88,14 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findByUserId(Object userId) {
-		return findByProperty(USER_ID, userId);
-	}
-
 	public List findByText(Object text) {
 		return findByProperty(TEXT, text);
 	}
 
-	public List findBySenderUserId(Object senderUserId) {
-		return findByProperty(SENDER_USER_ID, senderUserId);
-	}
-
 	public List findAll() {
-		log.debug("finding all Massage instances");
+		log.debug("finding all Message instances");
 		try {
-			String queryString = "from Massage";
+			String queryString = "from Message";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -115,10 +104,10 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Massage merge(Massage detachedInstance) {
-		log.debug("merging Massage instance");
+	public Object merge(Object detachedInstance) {
+		log.debug("merging Message instance");
 		try {
-			Massage result = (Massage) getSession().merge(detachedInstance);
+			Object result = (Object) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -127,10 +116,11 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public void attachDirty(Massage instance) {
-		log.debug("attaching dirty Massage instance");
+	public void attachDirty(Object instance) {
+		log.debug("attaching dirty Message instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -138,8 +128,8 @@ public class MassageDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public void attachClean(Massage instance) {
-		log.debug("attaching clean Massage instance");
+	public void attachClean(Object instance) {
+		log.debug("attaching clean Message instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");

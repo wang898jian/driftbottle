@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +28,8 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("saving Bottle instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
-			getSession().flush(); 
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
@@ -41,6 +40,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("deleting Bottle instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -48,11 +48,12 @@ public class BottleDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public Bottle findById(java.lang.Integer id) {
+	public Bottle findById(java.lang.String id) {
 		log.debug("getting Bottle instance with id: " + id);
 		try {
 			Bottle instance = (Bottle) getSession().get(
 					"sse.ustc.driftbottle.DAO.Bottle", id);
+			getSession().flush();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -66,6 +67,7 @@ public class BottleDAO extends BaseHibernateDAO {
 			List results = getSession()
 					.createCriteria("sse.ustc.driftbottle.DAO.Bottle")
 					.add(Example.create(instance)).list();
+			getSession().flush();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -89,21 +91,6 @@ public class BottleDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	public List findByPropertyNoMemb(String propertyName, Object value) {
-		log.debug("finding Bottle instance without property: " + propertyName
-				+ ", value: " + value);
-		try {
-			String queryString = "from Bottle as model where model."
-					+ propertyName + "is not ?";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, value);
-			return queryObject.list();
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
-
 
 	public List findByBottleType(Object bottleType) {
 		return findByProperty(BOTTLE_TYPE, bottleType);
@@ -125,6 +112,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("merging Bottle instance");
 		try {
 			Bottle result = (Bottle) getSession().merge(detachedInstance);
+			getSession().flush();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -137,6 +125,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty Bottle instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -148,6 +137,7 @@ public class BottleDAO extends BaseHibernateDAO {
 		log.debug("attaching clean Bottle instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

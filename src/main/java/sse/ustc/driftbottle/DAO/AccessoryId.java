@@ -11,7 +11,7 @@ public class AccessoryId implements java.io.Serializable {
 	// Fields
 
 	private Integer accessoryId;
-	private Massage massage;
+	private Object message;
 
 	// Constructors
 
@@ -20,9 +20,9 @@ public class AccessoryId implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public AccessoryId(Integer accessoryId, Massage massage) {
+	public AccessoryId(Integer accessoryId, Object message) {
 		this.accessoryId = accessoryId;
-		this.massage = massage;
+		this.message = message;
 	}
 
 	// Property accessors
@@ -35,12 +35,12 @@ public class AccessoryId implements java.io.Serializable {
 		this.accessoryId = accessoryId;
 	}
 
-	public Massage getMassage() {
-		return this.massage;
+	public Object getMessage() {
+		return this.message;
 	}
 
-	public void setMassage(Massage massage) {
-		this.massage = massage;
+	public void setMessage(Object massage) {
+		this.message = message;
 	}
 
 	public boolean equals(Object other) {
@@ -55,9 +55,9 @@ public class AccessoryId implements java.io.Serializable {
 		return ((this.getAccessoryId() == castOther.getAccessoryId()) || (this
 				.getAccessoryId() != null && castOther.getAccessoryId() != null && this
 				.getAccessoryId().equals(castOther.getAccessoryId())))
-				&& ((this.getMassage() == castOther.getMassage()) || (this
-						.getMassage() != null && castOther.getMassage() != null && this
-						.getMassage().equals(castOther.getMassage())));
+				&& ((this.getMessage() == castOther.getMessage()) || (this
+						.getMessage() != null && castOther.getMessage() != null && this
+						.getMessage().equals(castOther.getMessage())));
 	}
 
 	public int hashCode() {
@@ -68,7 +68,7 @@ public class AccessoryId implements java.io.Serializable {
 				+ (getAccessoryId() == null ? 0 : this.getAccessoryId()
 						.hashCode());
 		result = 37 * result
-				+ (getMassage() == null ? 0 : this.getMassage().hashCode());
+				+ (getMessage() == null ? 0 : this.getMessage().hashCode());
 		return result;
 	}
 
