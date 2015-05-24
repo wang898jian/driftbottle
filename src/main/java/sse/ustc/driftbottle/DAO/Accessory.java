@@ -7,7 +7,15 @@ package sse.ustc.driftbottle.DAO;
 public class Accessory implements java.io.Serializable {
 
 	// Fields
+	private Integer Id;
 
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
 	private String accessoryId;
 	private Bottle bottle;
 	private Userinfo userinfo;

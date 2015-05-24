@@ -12,6 +12,15 @@ import org.apache.commons.lang.ObjectUtils.Null;
 public class Message implements java.io.Serializable {
 
 	// Fields
+	private Integer Id;
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
 
 	private String messageId;
 	private Bottle bottle;
@@ -19,6 +28,14 @@ public class Message implements java.io.Serializable {
 	private Userinfo userinfoByUserId;
 	private Userinfo userinfoBySenderUserId;
 	private Integer userId;
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	private Integer senderUserId;
 	private String text;
 	private Set accessories = new HashSet(0);
@@ -37,10 +54,12 @@ public class Message implements java.io.Serializable {
 		this.userinfoByUserId = userinfoByUserId;
 		this.text = text;
 	}
+
 	/** tmp constructor */
 	public Message(String messageId) {
 		this.messageId = messageId;
 	}
+
 	/** full constructor */
 	public Message(String messageId, Bottle bottle, Userinfo userinfoByUserId,
 			Userinfo userinfoBySenderUserId, String text, Set accessories) {
@@ -54,14 +73,14 @@ public class Message implements java.io.Serializable {
 
 	// Property accessors
 
-	public Boolean isEmpty()
-	{
+	public Boolean isEmpty() {
 		if (messageId.equals(null)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
+
 	public String getMessageId() {
 		return this.messageId;
 	}
@@ -73,10 +92,11 @@ public class Message implements java.io.Serializable {
 	public Bottle getBottle() {
 		return this.bottle;
 	}
-	
+
 	public String getBottleId() {
 		return this.bottleId;
 	}
+
 	public void setBottle(Bottle bottle) {
 		this.bottle = bottle;
 	}

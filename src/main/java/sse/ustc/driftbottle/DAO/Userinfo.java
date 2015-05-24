@@ -30,6 +30,7 @@ public class Userinfo implements java.io.Serializable {
 
 	/** default constructor */
 	public Userinfo() {
+		userId = -1;
 	}
 
 	/** minimal constructor */

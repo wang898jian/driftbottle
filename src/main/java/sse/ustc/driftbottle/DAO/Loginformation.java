@@ -7,7 +7,7 @@ package sse.ustc.driftbottle.DAO;
 public class Loginformation implements java.io.Serializable {
 
 	// Fields
-
+	private Integer Id;
 	private String userName;
 	private Userinfo userinfo;
 	private String passWd;
@@ -22,6 +22,14 @@ public class Loginformation implements java.io.Serializable {
 	public Loginformation(String userName, Userinfo userinfo) {
 		this.userName = userName;
 		this.userinfo = userinfo;
+	}
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer userId) {
+		this.Id = userId;
 	}
 
 	/** full constructor */

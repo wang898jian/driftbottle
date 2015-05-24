@@ -93,43 +93,6 @@ public class FriendsImpl {
 			return "false";
 	}
 
-	@GET
-	@Path("/loginUserTest")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String loginUser() {
-		// File f = new File("c:/project_bottle/DriftBottle.txt");
-		String userName = "13675517749";
-		String passwd = "123456";
-		System.out.println(userName);
-		System.out.println(passwd);
-
-		LoginformationDAO logInforDao = new LoginformationDAO();
-		Loginformation tmpInfo = (Loginformation) logInforDao.findByProperty(
-				"userName", userName).get(0);
-
-		if (tmpInfo.getUserName().isEmpty()) {
-			System.out.println("input is null!");
-			return "false";
-		} else {
-			if (!tmpInfo.getPassWd().equals(passwd)) {
-				System.out.println("passwd is wrong!");
-				return "false";
-			} else {
-				UserinfoDAO userinfo = new UserinfoDAO();
-				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName)
-						.get(0);
-				System.out.println("find logInfo!");
-				if (userinfo.findByUserName(userName).isEmpty()) {
-					logInfo = new Userinfo();
-				}
-				logInfo.setUserName(userName);
-				logInfo.setUserState("online");
-				userinfo.attachDirty(logInfo);
-				return "true";
-			}
-		}
-	}
-	
 	
 	@POST
 	@Path("/sendBottle")
@@ -137,40 +100,123 @@ public class FriendsImpl {
 	public String sendBottle(
 			@FormParam("bottleId") String bottleID,
 			@FormParam("bottleType") Integer bottleType,
-			@FormParam("senderUserId") Integer senderID) {
+			@FormParam("senderId") Integer senderID) {
+		System.out.println(bottleID);
+		System.out.println(bottleType);
+		System.out.println(senderID);
 		UserinfoDAO userinfoDAO =new UserinfoDAO();
 		Userinfo userinfo = userinfoDAO.findById(senderID);
+		if (userinfo==null) {
+			System.out.println("can't find user!");
+			return "-1";
+		}
 		BottleDAO bottleDAO = new BottleDAO();
 		Bottle bottle = new Bottle();
 		bottle.setBottleId(bottleID);
 		bottle.setBottleType(bottleType);
 		bottle.setUserinfoBySenderUserId(userinfo);
 		bottleDAO.attachDirty(bottle);
-		return "false";
+		return "true";
 	}
 	
+	@POST
+	@Path("/getBottle")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getBottle(
+			@FormParam("bottleId") String bottleID,
+			@FormParam("bottleType") Integer bottleType,
+			@FormParam("senderId") Integer senderID) {
+		System.out.println(bottleID);
+		System.out.println(bottleType);
+		System.out.println(senderID);
+		UserinfoDAO userinfoDAO =new UserinfoDAO();
+		Userinfo userinfo = userinfoDAO.findById(senderID);
+		if (userinfo==null) {
+			System.out.println("can't find user!");
+		}
+		BottleDAO bottleDAO = new BottleDAO();
+		Bottle bottle = new Bottle();
+		bottle.setBottleId(bottleID);
+		bottle.setBottleType(bottleType);
+		bottle.setUserinfoBySenderUserId(userinfo);
+		bottleDAO.attachDirty(bottle);
+		return "true";
+	}
+	@GET
+	@Path("/sendBottleTmp")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sendBottleTmp() {
+		String bottleID="78565";
+		Integer bottleType= 0;
+		Integer senderID = 1;
+		UserinfoDAO userinfoDAO =new UserinfoDAO();
+		Userinfo userinfo = userinfoDAO.findById(senderID);
+		System.out.print(userinfo);
+		if (userinfo==null) {
+			System.out.println("can't find user!");
+			return "can't find user!";
+		}
+		BottleDAO bottleDAO = new BottleDAO();
+		Bottle bottle = new Bottle();
+		bottle.setBottleId(bottleID);
+		bottle.setBottleType(bottleType);
+		bottle.setUserinfoBySenderUserId(userinfo);
+		bottleDAO.attachDirty(bottle);
+		return "true";
+	}
 	@POST
 	@Path("/sendMessage")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//bottleID messageID text senderUserID
 	public String sendMassage(Message message) {
 		System.out.print(message.getText());
 		System.out.println("ooooaaaa");
 		BottleDAO bottleDAO = new BottleDAO();
 		Bottle bottle;
-		if (bottleDAO.findById(message.getBottleId()).isEmpty()==false) {
-			bottle = bottleDAO.findById(message.getBottleId());
+		if (bottleDAO.findByProperty("bottleId",message.getBottleId()).isEmpty()) {
+			return "can't find the bottle!";
 		}else {
-			bottle = new Bottle();
+			bottle = (Bottle)bottleDAO.findByProperty("bottleId",message.getBottleId()).get(0);
 		}
-		bottle.setBottleId(message.getBottleId());
-		bottleDAO.attachDirty(bottle);
 		message.setBottle(bottle);
+		bottleDAO.attachDirty(bottle);
 		MessageDAO messageDAO = new MessageDAO();
 		messageDAO.attachDirty(message);
 		return "true";
 	}
 	
+	@GET
+	@Path("/sendMessage")
+	@Produces(MediaType.TEXT_PLAIN)
+	//bottleID messageID text senderUserID
+	public String sendMassageTmp() {
+		Message message =new Message();
+		message.setBottleId("78565");
+		message.setMessageId("15132151");
+		message.setText("21351231");
+		message.setSenderUserId(7);
+		System.out.print(message.getText());
+		System.out.println("ooooaaaa");
+		BottleDAO bottleDAO = new BottleDAO();
+		Bottle bottle;
+		if (bottleDAO.findByProperty("bottleId",message.getBottleId()).isEmpty()) {
+			return "can't find the bottle!";
+		}else {
+			bottle = (Bottle)bottleDAO.findByProperty("bottleId",message.getBottleId()).get(0);
+		}
+		if (bottle.getId()==null) {
+			System.out.println("132151321");
+		}
+		System.out.println(bottle.getId());
+		System.out.println(bottle.getBottleId());
+		message.setBottle(bottle);
+		System.out.println(message.getBottle().getBottleId());
+		bottleDAO.attachDirty(bottle);
+		MessageDAO messageDAO = new MessageDAO();
+		messageDAO.attachDirty(message);
+		return "true";
+	}
 	@POST
 	@Path("/loginUser")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -183,14 +229,15 @@ public class FriendsImpl {
 		LoginformationDAO logInforDao = new LoginformationDAO();
 		Loginformation tmpInfo = (Loginformation) logInforDao.findByProperty(
 				"userName", userName).get(0);
-
+		System.out.println("flag is here!");
 		if (tmpInfo.getUserName().isEmpty()) {
 			System.out.println("input is null!");
-			return "false";
+			return "-1";
 		} else {
-			if (!tmpInfo.getPassWd().equals(passwd)) {
+			System.out.println("input is not null!");
+			if (tmpInfo.getPassWd().equals(passwd)==false) {
 				System.out.println("passwd is wrong!");
-				return "false";
+				return "-1";
 			} else {
 				UserinfoDAO userinfo = new UserinfoDAO();
 				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName)
@@ -202,13 +249,53 @@ public class FriendsImpl {
 				logInfo.setUserName(userName);
 				logInfo.setUserState("online");
 				userinfo.attachDirty(logInfo);
-				return "true";
+				System.out.println(logInfo.getUserId());
+				return logInfo.getUserId().toString();
 			}
 		}
 	}
-
+	
+//	@GET
+//	@Path("/loginUsertmp")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String tmploginUser() {
+//		// File f = new File("c:/project_bottle/DriftBottle.txt");
+//		String userName = "name";
+//		String passwd = "123456";
+//		System.out.println(userName);
+//		System.out.println(passwd);
+//
+//		LoginformationDAO logInforDao = new LoginformationDAO();
+//		Loginformation tmpInfo = (Loginformation) logInforDao.findByProperty(
+//				"userName", userName).get(0);
+//		System.out.println("flag is here!");
+//		if (tmpInfo.getUserName().isEmpty()) {
+//			System.out.println("input is null!");
+//			return "false";
+//		} else {
+//			System.out.println("input is not null!");
+//			if (tmpInfo.getPassWd().equals(passwd)==false) {
+//				System.out.println("passwd is wrong!");
+//				return "false";
+//			} else {
+//				UserinfoDAO userinfo = new UserinfoDAO();
+//				Userinfo logInfo = (Userinfo) userinfo.findByUserName(userName)
+//						.get(0);
+//				System.out.println("find logInfo!");
+//				if (userinfo.findByUserName(userName).isEmpty()) {
+//					logInfo = new Userinfo();
+//				}
+//				logInfo.setUserName(userName);
+//				logInfo.setUserState("online");
+//				userinfo.attachDirty(logInfo);
+//				System.out.println(logInfo.getUserId());
+//				return logInfo.getUserId().toString();
+//			}
+//		}
+//	}
+	
 	@POST
-	@Path("/sendFile")
+	@Path("/sendAccessory")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String sendFile(FormDataMultiPart multiPart) throws IOException {

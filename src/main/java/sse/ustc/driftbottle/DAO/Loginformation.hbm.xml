@@ -6,10 +6,13 @@
 -->
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Loginformation" table="loginformation" catalog="driftbottle">
-        <id name="userName" type="java.lang.String">
-            <column name="UserName" length="48" />
-            <generator class="assigned" />
+        <id name="Id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="increment" />
         </id>
+        <property name="userName" type="java.lang.String">
+            <column name="UserName" length="48" not-null="true" unique="true" />
+        </property>
         <one-to-one name="userinfo" class="sse.ustc.driftbottle.DAO.Userinfo" constrained="true"></one-to-one>
         <property name="passWd" type="java.lang.String">
             <column name="PassWd" length="1024" />

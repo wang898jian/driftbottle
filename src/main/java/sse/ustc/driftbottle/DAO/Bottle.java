@@ -10,6 +10,15 @@ import java.util.Set;
 public class Bottle implements java.io.Serializable {
 
 	// Fields
+	private Integer Id;
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
 
 	private String bottleId;
 	private Userinfo userinfoByUserId;
@@ -43,14 +52,14 @@ public class Bottle implements java.io.Serializable {
 	}
 
 	// Property accessors
-	public Boolean isEmpty()
-	{
+	public Boolean isEmpty() {
 		if (bottleId.equals(null)) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
+
 	public String getBottleId() {
 		return this.bottleId;
 	}

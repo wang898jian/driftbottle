@@ -28,6 +28,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 		log.debug("saving Loginformation instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -69,6 +70,7 @@ public class LoginformationDAO extends BaseHibernateDAO {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+
 			throw re;
 		}
 	}
@@ -84,6 +86,8 @@ public class LoginformationDAO extends BaseHibernateDAO {
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
+			System.out.println("find by example failed");
+			System.out.println(re);
 			throw re;
 		}
 	}

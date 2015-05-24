@@ -6,9 +6,9 @@
 -->
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Accessory" table="accessory" catalog="driftbottle">
-        <id name="accessoryId" type="java.lang.String">
-            <column name="AccessoryID" length="36" />
-            <generator class="assigned" />
+        <id name="Id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="increment" />
         </id>
         <many-to-one name="bottle" class="sse.ustc.driftbottle.DAO.Bottle" fetch="select">
             <column name="BottleID" length="36" not-null="true" />
@@ -19,6 +19,9 @@
         <many-to-one name="message" class="sse.ustc.driftbottle.DAO.Message" fetch="select">
             <column name="MessageID" length="36" not-null="true" />
         </many-to-one>
+        <property name="accessoryId" type="java.lang.Integer">
+            <column name="AccessoryID" length="36" not-null="true" unique = "true"/>
+        </property>
         <property name="accessoryType" type="java.lang.Integer">
             <column name="AccessoryType" />
         </property>
