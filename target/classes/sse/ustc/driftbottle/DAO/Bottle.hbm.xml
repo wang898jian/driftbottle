@@ -29,11 +29,5 @@
 			</key>
 			<one-to-many class="sse.ustc.driftbottle.DAO.Message" />
 		</set>
-		<set name="accessories" inverse="true">
-			<key>
-				<column name="BottleID" length="36"/>
-			</key>
-			<one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
-		</set>
 	</class>
 </hibernate-mapping>

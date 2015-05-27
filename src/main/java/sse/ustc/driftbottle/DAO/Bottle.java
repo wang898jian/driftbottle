@@ -11,6 +11,12 @@ public class Bottle implements java.io.Serializable {
 
 	// Fields
 	private Integer Id;
+	private String bottleId;
+	private Userinfo userinfoByUserId;
+	private Userinfo userinfoBySenderUserId;
+	private Integer bottleType;
+	private Set messages = new HashSet(0);
+	private Set accessories = new HashSet(0);
 
 	public Integer getId() {
 		return Id;
@@ -19,13 +25,6 @@ public class Bottle implements java.io.Serializable {
 	public void setId(Integer id) {
 		Id = id;
 	}
-
-	private String bottleId;
-	private Userinfo userinfoByUserId;
-	private Userinfo userinfoBySenderUserId;
-	private Integer bottleType;
-	private Set messages = new HashSet(0);
-	private Set accessories = new HashSet(0);
 
 	// Constructors
 

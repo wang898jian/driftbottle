@@ -13,6 +13,15 @@ public class Message implements java.io.Serializable {
 
 	// Fields
 	private Integer Id;
+	private String messageId;
+	private Bottle bottle;
+	private String bottleId;
+	private Userinfo userinfoByUserId;
+	private Userinfo userinfoBySenderUserId;
+	private Integer userId;
+	private Integer senderUserId;
+	private String text;
+	private Set accessories = new HashSet(0);
 
 	public Integer getId() {
 		return Id;
@@ -22,12 +31,6 @@ public class Message implements java.io.Serializable {
 		Id = id;
 	}
 
-	private String messageId;
-	private Bottle bottle;
-	private String bottleId;
-	private Userinfo userinfoByUserId;
-	private Userinfo userinfoBySenderUserId;
-	private Integer userId;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -35,10 +38,6 @@ public class Message implements java.io.Serializable {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
-	private Integer senderUserId;
-	private String text;
-	private Set accessories = new HashSet(0);
 
 	// Constructors
 

@@ -19,8 +19,8 @@ public class Accessory implements java.io.Serializable {
 	private String accessoryId;
 	private Bottle bottle;
 	private Userinfo userinfo;
-	private Object message;
-	private Integer accessoryType;
+	private Message message;
+	private String accessoryType;
 	private String accessoryUrl;
 
 	// Constructors
@@ -31,7 +31,7 @@ public class Accessory implements java.io.Serializable {
 
 	/** minimal constructor */
 	public Accessory(String accessoryId, Bottle bottle, Userinfo userinfo,
-			Object message) {
+			Message message) {
 		this.accessoryId = accessoryId;
 		this.bottle = bottle;
 		this.userinfo = userinfo;
@@ -40,7 +40,7 @@ public class Accessory implements java.io.Serializable {
 
 	/** full constructor */
 	public Accessory(String accessoryId, Bottle bottle, Userinfo userinfo,
-			Object message, Integer accessoryType, String accessoryUrl) {
+			Message message, String accessoryType, String accessoryUrl) {
 		this.accessoryId = accessoryId;
 		this.bottle = bottle;
 		this.userinfo = userinfo;
@@ -75,19 +75,19 @@ public class Accessory implements java.io.Serializable {
 		this.userinfo = userinfo;
 	}
 
-	public Object getMessage() {
+	public Message getMessage() {
 		return this.message;
 	}
 
-	public void setMessage(Object message) {
+	public void setMessage(Message message) {
 		this.message = message;
 	}
 
-	public Integer getAccessoryType() {
+	public String getAccessoryType() {
 		return this.accessoryType;
 	}
 
-	public void setAccessoryType(Integer accessoryType) {
+	public void setAccessoryType(String accessoryType) {
 		this.accessoryType = accessoryType;
 	}
 

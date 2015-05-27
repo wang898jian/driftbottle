@@ -48,12 +48,6 @@
             <one-to-many class="sse.ustc.driftbottle.DAO.Bottle" />
         </set>
         <one-to-one name="loginformation" class="sse.ustc.driftbottle.DAO.Loginformation"></one-to-one>
-        <set name="accessories" inverse="true">
-            <key>
-                <column name="UserID" not-null="true" />
-            </key>
-            <one-to-many class="sse.ustc.driftbottle.DAO.Accessory" />
-        </set>
         <set name="messagesForSenderUserId" inverse="true">
             <key>
                 <column name="SenderUserID" />

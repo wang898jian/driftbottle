@@ -29,6 +29,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("saving Accessory instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -40,6 +41,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("deleting Accessory instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -52,6 +54,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		try {
 			Accessory instance = (Accessory) getSession().get(
 					"sse.ustc.driftbottle.DAO.Accessory", id);
+			getSession().flush();
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -65,6 +68,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 			List results = getSession()
 					.createCriteria("sse.ustc.driftbottle.DAO.Accessory")
 					.add(Example.create(instance)).list();
+			getSession().flush();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -81,6 +85,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 			String queryString = "from Accessory as model where model."
 					+ propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
+			getSession().flush();
 			queryObject.setParameter(0, value);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -102,6 +107,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		try {
 			String queryString = "from Accessory";
 			Query queryObject = getSession().createQuery(queryString);
+			getSession().flush();
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
@@ -113,6 +119,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("merging Accessory instance");
 		try {
 			Accessory result = (Accessory) getSession().merge(detachedInstance);
+			getSession().flush();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -125,6 +132,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty Accessory instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -136,6 +144,7 @@ public class AccessoryDAO extends BaseHibernateDAO {
 		log.debug("attaching clean Accessory instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
