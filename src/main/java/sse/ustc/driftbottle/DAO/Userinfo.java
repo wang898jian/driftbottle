@@ -3,14 +3,16 @@ package sse.ustc.driftbottle.DAO;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Userinfo entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Userinfo implements java.io.Serializable {
 
 	// Fields
-
 	private Integer userId;
 	private String userName;
 	private String realName;
@@ -18,12 +20,18 @@ public class Userinfo implements java.io.Serializable {
 	private String userState;
 	private String firstBottleTime;
 	private String lastBottleTime;
+
 	private Set bottlesForSenderUserId = new HashSet(0);
+
 	private Set messagesForUserId = new HashSet(0);
 	private Friends friends;
+
 	private Set bottlesForUserId = new HashSet(0);
+
 	private Loginformation loginformation;
+
 	private Set accessories = new HashSet(0);
+
 	private Set messagesForSenderUserId = new HashSet(0);
 
 	// Constructors
@@ -63,6 +71,13 @@ public class Userinfo implements java.io.Serializable {
 	}
 
 	// Property accessors
+	public Integer getId() {
+		return this.userId;
+	}
+
+	public void setId(Integer userId) {
+		this.userId = userId;
+	}
 
 	public Integer getUserId() {
 		return this.userId;

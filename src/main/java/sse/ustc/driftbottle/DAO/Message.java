@@ -4,23 +4,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils.Null;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Message entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Message implements java.io.Serializable {
 
 	// Fields
-	private Integer Id;
 	private String messageId;
-	private Bottle bottle;
 	private String bottleId;
-	private Userinfo userinfoByUserId;
-	private Userinfo userinfoBySenderUserId;
 	private Integer userId;
 	private Integer senderUserId;
 	private String text;
+	
+	@JsonIgnore
+	private Integer Id;
+	@JsonIgnore
+	private Bottle bottle;
+	@JsonIgnore
+	private Userinfo userinfoByUserId;
+	@JsonIgnore
+	private Userinfo userinfoBySenderUserId;
+
 	private Set accessories = new HashSet(0);
 
 	public Integer getId() {

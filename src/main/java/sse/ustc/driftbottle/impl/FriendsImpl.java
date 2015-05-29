@@ -1,5 +1,5 @@
 package sse.ustc.driftbottle.impl;
-import javax.servlet.ServletContext;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.persistence.Entity;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +20,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
 
 import sse.ustc.driftbottle.DAO.Accessory;
 import sse.ustc.driftbottle.DAO.AccessoryDAO;
@@ -42,6 +40,7 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.FormDataParam;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
+
 @Entity
 @Path("/myresource")
 public class FriendsImpl {
@@ -93,8 +92,8 @@ public class FriendsImpl {
 		System.out.println(bottleType);
 		System.out.println(senderID);
 		UserinfoDAO userinfoDAO = new UserinfoDAO();
-		Userinfo userinfo = userinfoDAO.findById(senderID);
-		if (userinfo == null) {
+		Userinfo senderUserinfo = userinfoDAO.findById(senderID);
+		if (senderUserinfo == null) {
 			System.out.println("can't find user!");
 			return "-1";
 		}
@@ -102,7 +101,9 @@ public class FriendsImpl {
 		Bottle bottle = new Bottle();
 		bottle.setBottleId(bottleID);
 		bottle.setBottleType(bottleType);
-		bottle.setUserinfoBySenderUserId(userinfo);
+		// Userinfo userinfo = new Userinfo();
+		// userinfo.setUserId(-1);
+		// bottle.setUserinfoBySenderUserId(userinfo);
 		bottleDAO.attachDirty(bottle);
 		return "true";
 	}
@@ -263,96 +264,179 @@ public class FriendsImpl {
 		return "true";
 	}
 
-	@POST
-	@Path("/getAccessory")
-	@Produces(MediaType.MULTIPART_FORM_DATA)
-	public FormDataMultiPart getAccessory(
-			@FormParam("messageId") String messageId) {
-		AccessoryDAO accessoryDAO = new AccessoryDAO();
-		FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
-		List<Accessory> accessories = accessoryDAO.findByProperty("messageId",
-				messageId);
-		Integer i = 0;
-		for (; i < accessories.size(); i++) {
-			Accessory accessoryTmp = accessories.get(i);
-			File tmpFile = new File("C:\\upload", accessoryTmp.getAccessoryId()
-					+ accessoryTmp.getAccessoryType());
-			FileDataBodyPart TmpBodyPart = new FileDataBodyPart(i.toString(),
-					tmpFile);
-			formDataMultiPart.bodyPart(TmpBodyPart);
-		}
-		formDataMultiPart.field("numbOfFile", i.toString());
-		return formDataMultiPart;
-	}
+	// @POST
+	// @Path("/getAccessory")
+	// @Produces(MediaType.MULTIPART_FORM_DATA)
+	// public FormDataMultiPart getAccessory(
+	// @FormParam("messageId") String messageId) {
+	// AccessoryDAO accessoryDAO = new AccessoryDAO();
+	// FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+	// List<Accessory> accessories = accessoryDAO.findByProperty("messageId",
+	// messageId);
+	// Integer i = 0;
+	// for (; i < accessories.size(); i++) {
+	// Accessory accessoryTmp = accessories.get(i);
+	// File tmpFile = new File("C:\\upload", accessoryTmp.getAccessoryId()
+	// + accessoryTmp.getAccessoryType());
+	// FileDataBodyPart TmpBodyPart = new FileDataBodyPart(i.toString(),
+	// tmpFile);
+	// formDataMultiPart.bodyPart(TmpBodyPart);
+	// }
+	// formDataMultiPart.field("numbOfFile", i.toString());
+	// return formDataMultiPart;
+	// }
 
 	@GET
 	@Path("{imageName}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public void getAccessory(@Context HttpServletResponse response,
-			@PathParam("imageName") String imageName) throws Exception{
-	File pathsavefile = new File("C:\\upload", imageName);
-	response.reset(); 
-	response.setContentType("APPLICATION/OCTET-STREAM"); 
-	imageName=response.encodeURL(new String(imageName.getBytes(),"UTF-8"));//转码 
-	response.setHeader("Content-Disposition", "attachment; filename=\""+imageName+"\"");
-	ServletOutputStream out = response.getOutputStream(); 
-	InputStream inStream=new FileInputStream(pathsavefile); 
-	byte[] b = new byte[1024]; 
-	int len; 
-	while((len=inStream.read(b)) >0) 
-	out.write(b,0,len); 
-	response.setStatus( response.SC_OK ); 
-	response.flushBuffer(); 
-	out.close(); 
-	inStream.close();
-	return;
+			@PathParam("imageName") String imageName) throws Exception {
+		File pathsavefile = new File("C:\\upload", imageName);
+		response.reset();
+		response.setContentType("image/jpeg");
+		imageName = response
+				.encodeURL(new String(imageName.getBytes(), "UTF-8"));// 转码
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ imageName + "\"");
+		ServletOutputStream out = response.getOutputStream();
+		InputStream inStream = new FileInputStream(pathsavefile);
+		byte[] b = new byte[1024];
+		int len;
+		while ((len = inStream.read(b)) > 0)
+			out.write(b, 0, len);
+		response.setStatus(response.SC_OK);
+		response.flushBuffer();
+		out.close();
+		inStream.close();
+		return;
 	}
-	
-	
+
 	@POST
 	@Path("/getMessage")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Message> getMessage(@FormParam("bottleId") String bottleId) {
 		MessageDAO messageDAO = new MessageDAO();
+		Bottle bottle = new Bottle();
+		bottle.setBottleId(bottleId);
 		List<Message> messages = messageDAO
-				.findByProperty("bottleId", bottleId);
+				.findByProperty("bottleId", bottle);
+		return messages;
+	}
+	
+	//fortest
+	@GET
+	@Path("/getMessage")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Message> gettmpMessage() {
+		String bottleId = "04C1D819-9027-4586-851E-9D4FD859E19F"; 
+		MessageDAO messageDAO = new MessageDAO();
+		Bottle bottle = new Bottle();
+		bottle.setBottleId(bottleId);
+		List<Message> messages = messageDAO
+				.findByProperty("bottleId", bottle);
 		return messages;
 	}
 
-	
-	
 	@POST
 	@Path("/getUserBottle")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Bottle> getUserBottle(
-			@FormParam("senderUserId") String senderUserId) {
+			@FormParam("senderUserId") Integer senderUserId) {
 		BottleDAO bottleDAO = new BottleDAO();
+		Userinfo userinfo = new Userinfo();
+		userinfo.setUserId(senderUserId);
 		List<Bottle> bottles = bottleDAO.findByProperty("senderUserId",
-				senderUserId);
+				userinfo);
 		return bottles;
 	}
-
+	
 	@POST
 	@Path("/getRandomBottle")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Bottle getRandomBottle(@FormParam("userId") String userId) {
+		System.out.println(userId);
 		BottleDAO bottleDAO = new BottleDAO();
-		List<Bottle> bottles = bottleDAO.findByProperty("userId", "");
+		List<Bottle> bottles = bottleDAO.findByPropertyTmp("userinfoByUserId");
+
 		Integer sizeInteger = bottles.size();
+		System.out.println(sizeInteger);
 		Random random = new Random();
+
 		Bottle bottle;
 		Integer numb = 0;
-		do {
+
+		for (;; numb++) {
 			Integer tmpInteger = Math.abs(random.nextInt() % sizeInteger);
 			bottle = bottles.get(tmpInteger);
-			numb++;
-		} while (bottle.getUserinfoBySenderUserId().getUserId().equals(userId)
-				|| numb < sizeInteger);
-		if (numb > sizeInteger) {
-			bottle.setId(-1);
+
+			if (bottle.getUserinfoBySenderUserId() == null) {
+				System.out.println("SenderUserId is null");
+				numb++;
+				if (numb < sizeInteger)
+					continue;
+				else
+					break;
+			} else if (bottle.getUserinfoBySenderUserId().getUserId()
+					.equals(userId)) {
+				System.out.println("find the bottle!");
+				System.out.println(bottle.getUserinfoBySenderUserId()
+						.getUserId().toString());
+				break;
+			} else if (numb > tmpInteger) {
+				break;
+			}
+			System.out.println(numb);
 		}
+		System.out.println("asdijfaoisjdfoijasoidjf");
+		System.out.println(bottle.getUserinfoBySenderUserId()
+				.getBottlesForSenderUserId().size());
 		return bottle;
 	}
+	
+//	//实验用的
+//	@GET
+//	@Path("/getTmpRandomBottle")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Bottle getTmpRandomBottle() {
+//		String userId = "2";
+//		System.out.println(userId);
+//		BottleDAO bottleDAO = new BottleDAO();
+//		List<Bottle> bottles = bottleDAO.findByPropertyTmp("userinfoByUserId");
+//
+//		Integer sizeInteger = bottles.size();
+//		System.out.println(sizeInteger);
+//		Random random = new Random();
+//
+//		Bottle bottle;
+//		Integer numb = 0;
+//
+//		for (;; numb++) {
+//			Integer tmpInteger = Math.abs(random.nextInt() % sizeInteger);
+//			bottle = bottles.get(tmpInteger);
+//
+//			if (bottle.getUserinfoBySenderUserId() == null) {
+//				System.out.println("SenderUserId is null");
+//				numb++;
+//				if (numb < sizeInteger)
+//					continue;
+//				else
+//					break;
+//			} else if (bottle.getUserinfoBySenderUserId().getUserId()
+//					.equals(userId)) {
+//				System.out.println("find the bottle!");
+//				System.out.println(bottle.getUserinfoBySenderUserId()
+//						.getUserId().toString());
+//				break;
+//			} else if (numb > tmpInteger) {
+//				break;
+//			}
+//			System.out.println(numb);
+//		}
+//		System.out.println("asdijfaoisjdfoijasoidjf");
+//		System.out.println(bottle.getUserinfoBySenderUserId()
+//				.getBottlesForSenderUserId().size());
+//		return bottle;
+//	}
 
 	@GET
 	@Path("/list")

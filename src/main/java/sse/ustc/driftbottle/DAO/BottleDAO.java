@@ -91,7 +91,30 @@ public class BottleDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	public List findByPropertyTmp(String propertyName) {
+		log.debug("finding Bottle instance with property: " + propertyName);
+		try {
+			String queryString = "from Bottle as model where model."
+					+ propertyName + " is null";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findByPropertyIsNull(String propertyName) {
+		log.debug("finding Bottle instance with property: " + propertyName
+				);
+		try {
+			String queryString = "SELECT * FROM driftbottle.bottle where driftbottle.bottle.UserID is null";
+			Query queryObject = getSession().createSQLQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 	public List findByBottleType(Object bottleType) {
 		return findByProperty(BOTTLE_TYPE, bottleType);
 	}
@@ -141,6 +164,7 @@ public class BottleDAO extends BaseHibernateDAO {
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
+			System.out.print("attach failed");
 			throw re;
 		}
 	}

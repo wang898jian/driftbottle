@@ -1,14 +1,18 @@
 package sse.ustc.driftbottle.DAO;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Friends entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Friends implements java.io.Serializable {
 
 	// Fields
 
 	private Integer userId;
+	@JsonIgnore
 	private Userinfo userinfo;
 	private Integer friendId;
 	private String friendName;

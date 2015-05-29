@@ -1,14 +1,18 @@
 package sse.ustc.driftbottle.DAO;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Loginformation entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Loginformation implements java.io.Serializable {
 
 	// Fields
 	private Integer Id;
 	private String userName;
+	@JsonIgnore
 	private Userinfo userinfo;
 	private String passWd;
 

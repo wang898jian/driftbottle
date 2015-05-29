@@ -1,12 +1,16 @@
 package sse.ustc.driftbottle.DAO;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Accessory entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Accessory implements java.io.Serializable {
 
 	// Fields
+	@JsonIgnore
 	private Integer Id;
 
 	public Integer getId() {
@@ -16,9 +20,13 @@ public class Accessory implements java.io.Serializable {
 	public void setId(Integer id) {
 		Id = id;
 	}
+
 	private String accessoryId;
+	@JsonIgnore
 	private Bottle bottle;
+	@JsonIgnore
 	private Userinfo userinfo;
+	@JsonIgnore
 	private Message message;
 	private String accessoryType;
 	private String accessoryUrl;

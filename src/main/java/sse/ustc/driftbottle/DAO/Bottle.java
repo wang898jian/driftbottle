@@ -1,23 +1,34 @@
 package sse.ustc.driftbottle.DAO;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Bottle entity. @author MyEclipse Persistence Tools
  */
-
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Bottle implements java.io.Serializable {
 
 	// Fields
+	@JsonIgnore
 	private Integer Id;
 	private String bottleId;
-	private Userinfo userinfoByUserId;
-	private Userinfo userinfoBySenderUserId;
+	
 	private Integer bottleType;
+
+	
+	@JsonIgnore
+	private Userinfo userinfoByUserId;
+	@JsonIgnore
+	private Userinfo userinfoBySenderUserId;
+
 	private Set messages = new HashSet(0);
 	private Set accessories = new HashSet(0);
-
+	
 	public Integer getId() {
 		return Id;
 	}
