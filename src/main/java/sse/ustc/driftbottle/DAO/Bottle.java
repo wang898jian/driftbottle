@@ -10,17 +10,46 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 /**
  * Bottle entity. @author MyEclipse Persistence Tools
  */
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class Bottle implements java.io.Serializable {
 
 	// Fields
 	@JsonIgnore
 	private Integer Id;
 	private String bottleId;
-	
+
 	private Integer bottleType;
 
-	
+	private Integer senderUserId;
+
+	public Integer getSenderUserId() {
+		return senderUserId;
+	}
+
+	public void setSenderUserId() {
+		this.senderUserId = userinfoBySenderUserId.getUserId();
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setSenderUserId(Integer senderUserId) {
+		this.senderUserId = senderUserId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public void setUserId() {
+		try {
+			this.userId = userinfoByUserId.getUserId();
+		} catch (Exception e) {
+		}
+	}
+
+	private Integer userId;
 	@JsonIgnore
 	private Userinfo userinfoByUserId;
 	@JsonIgnore
@@ -28,7 +57,7 @@ public class Bottle implements java.io.Serializable {
 
 	private Set messages = new HashSet(0);
 	private Set accessories = new HashSet(0);
-	
+
 	public Integer getId() {
 		return Id;
 	}
@@ -83,6 +112,11 @@ public class Bottle implements java.io.Serializable {
 	}
 
 	public void setUserinfoByUserId(Userinfo userinfoByUserId) {
+		try {
+			userId = this.userinfoByUserId.getUserId();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		this.userinfoByUserId = userinfoByUserId;
 	}
 
@@ -91,6 +125,11 @@ public class Bottle implements java.io.Serializable {
 	}
 
 	public void setUserinfoBySenderUserId(Userinfo userinfoBySenderUserId) {
+		try {
+			senderUserId = userinfoBySenderUserId.getUserId();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		this.userinfoBySenderUserId = userinfoBySenderUserId;
 	}
 

@@ -19,7 +19,7 @@ public class Message implements java.io.Serializable {
 	private Integer userId;
 	private Integer senderUserId;
 	private String text;
-	
+
 	@JsonIgnore
 	private Integer Id;
 	@JsonIgnore
@@ -113,6 +113,11 @@ public class Message implements java.io.Serializable {
 	}
 
 	public void setUserinfoByUserId(Userinfo userinfoByUserId) {
+		try {
+			userId = userinfoByUserId.getUserId();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		this.userinfoByUserId = userinfoByUserId;
 	}
 
@@ -121,6 +126,11 @@ public class Message implements java.io.Serializable {
 	}
 
 	public void setUserinfoBySenderUserId(Userinfo userinfoBySenderUserId) {
+		try {
+			senderUserId = userinfoBySenderUserId.getUserId();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		this.userinfoBySenderUserId = userinfoBySenderUserId;
 	}
 

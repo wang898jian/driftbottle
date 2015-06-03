@@ -20,6 +20,15 @@ public class Userinfo implements java.io.Serializable {
 	private String userState;
 	private String firstBottleTime;
 	private String lastBottleTime;
+	private String deviceToken;
+	
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
 
 	private Set bottlesForSenderUserId = new HashSet(0);
 
@@ -80,6 +89,9 @@ public class Userinfo implements java.io.Serializable {
 	}
 
 	public Integer getUserId() {
+		if (this.userId==null) {
+			return -1;
+		}
 		return this.userId;
 	}
 

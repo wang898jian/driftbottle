@@ -10,6 +10,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class Friends implements java.io.Serializable {
 
 	// Fields
+	private Integer Id;
+	
 
 	private Integer userId;
 	@JsonIgnore
@@ -18,7 +20,13 @@ public class Friends implements java.io.Serializable {
 	private String friendName;
 
 	// Constructors
+	public Integer getId() {
+		return Id;
+	}
 
+	public void setId(Integer id) {
+		Id = id;
+	}
 	/** default constructor */
 	public Friends() {
 	}

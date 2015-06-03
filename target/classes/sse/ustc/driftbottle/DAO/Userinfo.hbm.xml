@@ -28,6 +28,9 @@
         <property name="lastBottleTime" type="java.lang.String">
             <column name="lastBottleTime" length="45" />
         </property>
+        <property name="deviceToken" type="java.lang.String">
+            <column name="deviceToken" length="1024" />
+        </property>
         <set name="bottlesForSenderUserId" inverse="true">
             <key>
                 <column name="SenderUserID" />

@@ -6,10 +6,13 @@
 -->
 <hibernate-mapping>
     <class name="sse.ustc.driftbottle.DAO.Friends" table="friends" catalog="driftbottle">
-        <id name="userId" type="java.lang.Integer">
-            <column name="UserID" />
-            <generator class="assigned" />
+        <id name="Id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="increment" />
         </id>
+        <property name="userId" type="java.lang.String">
+            <column name="UserID" />
+        </property>
         <one-to-one name="userinfo" class="sse.ustc.driftbottle.DAO.Userinfo" constrained="true"></one-to-one>
         <property name="friendId" type="java.lang.Integer">
             <column name="FriendID" />
